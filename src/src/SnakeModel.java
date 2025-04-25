@@ -27,66 +27,88 @@ public class SnakeModel extends Model {
 	
 	public void addSnakePiece(int row, int col)
 	{
-		snakeList.addLast(new Piece(row, col, SNAKE_COLOR));
+		//Add a new piece to the list
+		snakeList.addLast(new Piece(row, col));
 		
-		//Remove the panel at the specified coordinates and then add the snake in its place
-		view.removeComponent(row, col);
-		view.addPiece(row, col, snakeList.getLast());
-		
+		//Make the snake piece visible on the grid
+		view.setSnakeColor(snakeList.getLast().getRow(), snakeList.getLast().getCol());
 	}
 	
-	private void swapFrontBack()
+	/**
+	 * Move the piece at the back of the list to the front
+	 */
+	private void moveBackFront()
 	{
-		//Add the subject to the front and remove it from the back of the list
+		//Adds the piece at the back of the list to the front
 		snakeList.addFirst(snakeList.getLast());
+		//Removes from the back of the list
 		snakeList.removeLast();
 	}
 	
 	/**
-	 * TODO: Rethink this whole thing mane
+	 * After swapping front and back piece in list, do necessary procedures to:
+	 * 				Change the color of the old coordinate of the front piece to grid color
+	 * 				Change the coordinates of the front piece
+	 * 				Change the color of the new coordinate of the front piece to snake color
+	 * 
+	 * @param row row to change row of first in list to
+	 * @param col col to change col of first in list to
+	 */
+	private void moveFrontPiece(int row, int col)
+	{
+		//Set the location of the back (now front) piece to grid color
+		view.setGridColor(snakeList.getFirst().getRow(), snakeList.getFirst().getCol());
+		
+		//Change the row of the back (now front) piece to the new coordinates
+		snakeList.getFirst().setRow(row);
+		snakeList.getFirst().setCol(col);
+		
+		//Set the new location of the back (now front) piece to snake color
+		view.setSnakeColor(snakeList.getFirst().getRow(), snakeList.getFirst().getCol());
+		
+	}
+	//TODO: There's some sort of problem with movement towards the beginning that fixes itself after you press enough directions?
+	/**
+	 * 
 	 */
 	public void moveUp()
 	{
-		//Reference is the piece at the front
-		Piece reference = snakeList.getFirst();
-		//Subject is the piece to be moved
-		Piece subject = snakeList.getLast();
+		//Move the back piece to the front
+		moveBackFront();
 		
-		//Test
-		System.out.println("(Before swap) Reference coordinates: " + reference.getRow() + ", Subject: " + subject.getRow());
-		
-		//Swap positions of first and last piece in list
-		swapFrontBack();
-		
-		//Test
-		System.out.println("(After swap) Reference coordinates: " + reference.getRow() + ", Subject: " + subject.getRow());
-		
-		//Remove the subject from the grid visually
-		view.removeComponent(subject.getRow(), subject.getCol());
-		
-		//Change the stored coordinate of the subject one row up
-		subject.setRow(reference.getRow() - 1);
-		
-		//Add the subject to the grid in its new place
-		view.addPiece(subject.getRow(), subject.getCol(), subject);
-		
-		//Test that the list is the same as the subject
-		System.out.println("Test subject = first list: Subject: " + subject.getRow() + ", FirstList: " + snakeList.getFirst().getRow());
+		//Move the piece at the front to the right coordinates and display change
+		//Moving one row above piece behind it
+		moveFrontPiece(snakeList.get(1).getRow() - 1, snakeList.get(1).getCol());
 	}
 	
 	public void moveDown()
 	{
+		//Move the back piece to the front
+		moveBackFront();
 		
+		//Move the piece at the front to the right coordinates and display change
+		//Moving one row below piece behind it
+		moveFrontPiece(snakeList.get(1).getRow() + 1, snakeList.get(1).getCol());
 	}
 	
 	public void moveLeft()
 	{
+		//Move the back piece to the front
+		moveBackFront();
 		
+		//Move the piece at the front to the right coordinates and display change
+		//Moving one col left of the piece behind it
+		moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() - 1);
 	}
 	
 	public void moveRight()
 	{
+		//Move the back piece to the front
+		moveBackFront();
 		
+		//Move the piece at the front to the right coordinates and display change
+		//Moving one col right of the piece behind it
+		moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() + 1);
 	}
 	
 	/**

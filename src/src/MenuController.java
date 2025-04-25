@@ -21,7 +21,8 @@ public class MenuController extends Controller {
 	 * The only button on the menu screen is the start button. So when this method is called, start the game.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		model.startGame();
 	}
 
@@ -33,7 +34,9 @@ public class MenuController extends Controller {
 	public void keyPressed(KeyEvent e) {
 		
 		int keyCode = e.getKeyCode();
-		
+		System.out.println(keyCode);
+		System.out.println(KeyEvent.VK_ENTER);
+		System.out.println(KeyEvent.VK_SPACE);
 		if(keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_ENTER)
 		{
 			model.startGame();

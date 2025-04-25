@@ -23,7 +23,7 @@ public class SnakeView extends View {
 	//The scalar for the size of the window
 	private static final double WINDOW_SCALAR = 1.25;
 	//The value for how many grid spaces there will be in the grid
-	private static final int GRID_DIMENSION = 15;
+	private static final int GRID_DIMENSION = 16;
 	//The file holding the text font
 	private static final File FONT_FILE = new File("PublicPixel-rv0pA.ttf");
 	
@@ -36,6 +36,8 @@ public class SnakeView extends View {
 	private static final Color FG_COLOR = Color.GREEN;
 	//Bg color
 	private static final Color BG_COLOR = Color.DARK_GRAY;
+	//Snake color
+	private static final Color SNAKE_COLOR = Color.GREEN;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;
@@ -92,9 +94,15 @@ public class SnakeView extends View {
 			e.printStackTrace();
 		}
 		
-		//Private methods create components of the window
+		//Private method creates the grid
 		createGrid();
-		createSnake();
+		
+		//Start the snake by adding two snake pieces to the list in model
+		model.addSnakePiece((int)(GRID_DIMENSION /2), (int)(GRID_DIMENSION /2));
+		model.addSnakePiece((int)(GRID_DIMENSION /2) - 1, (int)(GRID_DIMENSION /2));
+//		model.addSnakePiece((int)(GRID_DIMENSION /2) - 2, (int)(GRID_DIMENSION /2));
+//		model.addSnakePiece((int)(GRID_DIMENSION /3) - 2, (int)(GRID_DIMENSION /2));
+//		model.addSnakePiece((int)(GRID_DIMENSION /4) - 2, (int)(GRID_DIMENSION /2));
 		
 		//Add key listener to the view window
 		addKeyListener(controller);
@@ -116,9 +124,6 @@ public class SnakeView extends View {
 		//Array that will hold the posotions of every panel in the array
 		gridArray = new JPanel[GRID_DIMENSION][GRID_DIMENSION];
 		
-		//Keeps track of what number space is being created
-		int spaceIndex = 1;
-		
 		//Fill the grid with panels
 		for(int r = 0; r < GRID_DIMENSION; r++)
 		{
@@ -127,22 +132,11 @@ public class SnakeView extends View {
 				//Declare new JPanel added to array
 				gridArray[r][c] = new JPanel();
 				
-				//If even square, this color
-				if(spaceIndex % 2 == 0)
-				{
-					gridArray[r][c].setBackground(GRID_COLOR_1);
-				}
-				//Else other color
-				else
-				{
-					gridArray[r][c].setBackground(GRID_COLOR_2);
-				}
+				//Set the color of the piece
+				setGridColor(r, c);
 				
 				//Add to the JPanel
 				gridPanel.add(gridArray[r][c]);
-				
-				//Next space
-				spaceIndex++;
 			}
 		}
 		//Color
@@ -153,19 +147,53 @@ public class SnakeView extends View {
 	}
 	
 	/**
-	 * Starts the snake and places it in the middle of the grid
+	 * Determines the color of a grid piece by making it the opposite of the piece before it. 
+	 * Initializes color of the first grid piece.
+	 * @param row row of the piece
+	 * @param col column of the piece
 	 */
-	private void createSnake()
+	public void setGridColor(int row, int col)
 	{
-		//Add the first snake piece in the center of the grid (head) and the second one row below (tail)
-		model.addSnakePiece(GRID_DIMENSION / 2, GRID_DIMENSION / 2);
-		model.addSnakePiece((GRID_DIMENSION / 2) - 1, GRID_DIMENSION / 2);
+		//If the grid piece is the first, make its color one
+		if(row == 0 && col == 0)
+		{
+			gridArray[row][col].setBackground(GRID_COLOR_1);
+		}
 		
-//		//Add the snake pieces to the array
-//		TODO: Is the array necessary?
-//		//TODO: Make this more readable
-//		gridArray[snakeList.getFirst().getRow()][snakeList.getFirst().getCol()] = snakeList.getFirst();
-//		gridArray[snakeList.getLast().getRow()][snakeList.getLast().getCol()] = snakeList.getLast();
+		//Else if grid piece is in column 0, make it the opposite of the piece directly above it
+		else if(col == 0)
+		{
+			if(gridArray[row - 1][col].getBackground() == GRID_COLOR_1)
+			{
+				gridArray[row][col].setBackground(GRID_COLOR_2);
+			}
+			else
+			{
+				gridArray[row][col].setBackground(GRID_COLOR_1);
+			}
+		}
+		//Else make the color the opposite of the grid piece before it
+		else
+		{
+			if(gridArray[row][col - 1].getBackground() == GRID_COLOR_1)
+			{
+				gridArray[row][col].setBackground(GRID_COLOR_2);
+			}
+			else
+			{
+				gridArray[row][col].setBackground(GRID_COLOR_1);
+			}
+		}
+	}
+	
+	/**
+	 * Sets the JPanel at the specified coordinate value to the snake color
+	 * @param row row of the piece
+	 * @param col column of the piece
+	 */
+	public void setSnakeColor(int row, int col)
+	{
+		gridArray[row][col].setBackground(SNAKE_COLOR);
 	}
 	
 	/**

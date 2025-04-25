@@ -14,12 +14,10 @@ public class Piece extends JPanel{
 	 * @param row
 	 * @param col
 	 */
-	public Piece(int row, int col, Color color)
+	public Piece(int row, int col)
 	{
 		this.row = row;
 		this.col = col;
-		
-		setBackground(color);
 	}
 	
 	/**

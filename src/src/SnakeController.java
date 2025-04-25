@@ -43,14 +43,14 @@ public class SnakeController extends Controller{
 		//Down
 		if(input == KeyEvent.VK_S || input == KeyEvent.VK_DOWN)
 		{
-//			model.moveDown();
+			model.moveDown();
 			System.out.println("Down");
 		}
 		
 		//Left
 		if(input == KeyEvent.VK_A || input == KeyEvent.VK_LEFT)
 		{
-//			model.moveLeft();
+			model.moveLeft();
 			System.out.println("Left");
 
 		}
@@ -58,7 +58,7 @@ public class SnakeController extends Controller{
 		//Right
 		if(input == KeyEvent.VK_D || input == KeyEvent.VK_RIGHT)
 		{
-//			model.moveRight();
+			model.moveRight();
 			System.out.println("Right");
 		}
 	}

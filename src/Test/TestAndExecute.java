@@ -9,8 +9,8 @@ public class TestAndExecute{
 
 	public static void main(String[] args) {
 		TestAndExecute test = new TestAndExecute();
-		
-		test.testGameOver();
+		test.execute();
+		//test.testGameOver();
 	}
 	
 	/**

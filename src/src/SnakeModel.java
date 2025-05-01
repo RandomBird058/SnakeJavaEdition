@@ -41,7 +41,7 @@ public class SnakeModel extends Model {
 		snakeList.addLast(new Piece(row, col));
 		
 		//Make the snake piece visible on the grid
-		view.setPieceColor(snakeList.getLast().getRow(), snakeList.getLast().getCol(), SnakeView.SNAKE_COLOR);
+		view.setPieceColor(snakeList.getLast().getRow(), snakeList.getLast().getCol(), View.SNAKE_COLOR);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class SnakeModel extends Model {
 			
 			//Get JPanel at coordinates. If it is not the same color as the snake, must be clear.
 			//More efficient than going through entire snakeList comparing coordinates
-			if(view.getPanelAtCoordinates(row, col).getBackground() != SnakeView.SNAKE_COLOR)
+			if(view.getPanelAtCoordinates(row, col).getBackground() != View.SNAKE_COLOR)
 			{
 				clear = true;
 			}
@@ -78,7 +78,7 @@ public class SnakeModel extends Model {
 		goalList.addLast(new Piece(row, col));
 		
 		//Make it visible
-		view.setPieceColor(goalList.getLast().getRow(), goalList.getLast().getCol(), SnakeView.GOAL_COLOR);
+		view.setPieceColor(goalList.getLast().getRow(), goalList.getLast().getCol(), View.GOAL_COLOR);
 	}
 			
 	
@@ -112,7 +112,7 @@ public class SnakeModel extends Model {
 		snakeList.getFirst().setCol(col);
 		
 		//Set the new location of the back (now front) piece to snake color
-		view.setPieceColor(snakeList.getFirst().getRow(), snakeList.getFirst().getCol(), SnakeView.SNAKE_COLOR);
+		view.setPieceColor(snakeList.getFirst().getRow(), snakeList.getFirst().getCol(), View.SNAKE_COLOR);
 		
 	}
 	//TODO: There's some sort of problem with movement towards the beginning that fixes itself after you press enough directions?

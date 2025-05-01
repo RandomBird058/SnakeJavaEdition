@@ -20,14 +20,6 @@ public class MenuView extends View {
 	//The scalar for how big the menu window will be
 	private static final int WINDOW_SCALAR = 2;
 	
-	//The file holding the text font
-	private static final File FONT_FILE = new File("PublicPixel-rv0pA.ttf");
-	
-	//The bg color
-	private static final Color BG_COLOR = Color.DARK_GRAY;
-	//The fg color
-	private static final Color FG_COLOR = Color.GREEN;
-	
 	//The height and width that the window will be
 	private final int windowHeight;
 	private final int windowWidth;

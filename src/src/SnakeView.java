@@ -23,22 +23,6 @@ public class SnakeView extends View {
 	private static final double WINDOW_SCALAR = 1.25;
 	//The value for how many grid spaces there will be in the grid
 	protected static final int GRID_DIMENSION = 15;
-	//The file holding the text font
-	private static final File FONT_FILE = new File("PublicPixel-rv0pA.ttf");
-	
-	//Grid Colors will alternate
-	//Grid color
-	private static final Color GRID_COLOR_1 = Color.DARK_GRAY;
-	//Grid color
-	private static final Color GRID_COLOR_2 = Color.BLACK;
-	//Fg color
-	private static final Color FG_COLOR = Color.GREEN;
-	//Bg color
-	private static final Color BG_COLOR = Color.DARK_GRAY;
-	//Snake color
-	protected static final Color SNAKE_COLOR = Color.GREEN;
-	//Goal color
-	protected static final Color GOAL_COLOR = Color.ORANGE;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;
@@ -83,7 +67,7 @@ public class SnakeView extends View {
 		//Window dimension is the screen size divided by 2
 		windowDimension = (int)(screenSize.getHeight() / WINDOW_SCALAR);
 		
-		//Window will always be a square (TODO: possbily change this?)
+		//Window will always be a square (TODO: possibly change this? Low priority)
 		setSize(windowDimension, windowDimension);
 		
 		//Instantiate the font in try-catch
@@ -119,7 +103,6 @@ public class SnakeView extends View {
 	
 	/**
 	 * Adds the grid to the grid panel and adds the panel to the frame
-	 * TODO: Determine if you actually need the 2D array
 	 */
 	private void createGrid()
 	{

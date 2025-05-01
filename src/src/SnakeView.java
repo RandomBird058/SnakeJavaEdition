@@ -17,13 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-//TODO (major) rewrite the end
 public class SnakeView extends View {
 	
 	//The scalar for the size of the window
 	private static final double WINDOW_SCALAR = 1.25;
 	//The value for how many grid spaces there will be in the grid
-	private static final int GRID_DIMENSION = 16;
+	protected static final int GRID_DIMENSION = 15;
 	//The file holding the text font
 	private static final File FONT_FILE = new File("PublicPixel-rv0pA.ttf");
 	
@@ -37,7 +36,9 @@ public class SnakeView extends View {
 	//Bg color
 	private static final Color BG_COLOR = Color.DARK_GRAY;
 	//Snake color
-	private static final Color SNAKE_COLOR = Color.GREEN;
+	protected static final Color SNAKE_COLOR = Color.GREEN;
+	//Goal color
+	protected static final Color GOAL_COLOR = Color.ORANGE;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;
@@ -98,12 +99,17 @@ public class SnakeView extends View {
 		createGrid();
 		
 		//Start the snake by adding two snake pieces to the list in model
+		//Do not move to model b/c it causes problems!!!
 		model.addSnakePiece((int)(GRID_DIMENSION /2), (int)(GRID_DIMENSION /2));
 		model.addSnakePiece((int)(GRID_DIMENSION /2) - 1, (int)(GRID_DIMENSION /2));
 //		model.addSnakePiece((int)(GRID_DIMENSION /2) - 2, (int)(GRID_DIMENSION /2));
 //		model.addSnakePiece((int)(GRID_DIMENSION /3) - 2, (int)(GRID_DIMENSION /2));
 //		model.addSnakePiece((int)(GRID_DIMENSION /4) - 2, (int)(GRID_DIMENSION /2));
 		
+		//Generate the first goal
+		//Do not move to model b/c it causes problems!!!
+		model.generateGoal();
+				
 		//Add key listener to the view window
 		addKeyListener(controller);
 		
@@ -191,69 +197,9 @@ public class SnakeView extends View {
 	 * @param row row of the piece
 	 * @param col column of the piece
 	 */
-	public void setSnakeColor(int row, int col)
+	public void setPieceColor(int row, int col, Color color)
 	{
-		gridArray[row][col].setBackground(SNAKE_COLOR);
-	}
-	
-	/**
-	 * Removes a piece/JPanel from a specific coordinate
-	 * @param row row of the piece
-	 * @param col column of the piece
-	 */
-	public void removeComponent(int row, int col)
-	{
-		//Equation for calculating the index of a piece on the grid: index = r * cols + c
-		int index = row * GRID_DIMENSION + col;
-		gridPanel.remove(index);
-		
-	}
-	
-	/**
-	 * Adds a JPanel to the specified coordinates
-	 * @param row row of the piece
-	 * @param col column of the piece
-	 */
-	public void addJPanel(int row, int col)
-	{
-		//Equation for calculating the index of a piece on the grid: index = r * cols + c
-		int index = row * GRID_DIMENSION + col;
-		gridPanel.add(new JPanel(), index);
-		
-		gridPanel.revalidate();
-		gridPanel.repaint();
-	}
-	
-	/**
-	 * Adds a specified piece to the specified coordinates
-	 * @param row row of the piece
-	 * @param col column of the piece
-	 * @param piece the piece to be added
-	 */
-	public void addPiece(int row, int col, Piece piece)
-	{
-		//Equation for calculating the index of a piece on the grid: index = r * cols + c
-		int index = row * GRID_DIMENSION + col;
-		gridPanel.add(piece, index);
-		
-		gridPanel.revalidate();
-		gridPanel.repaint();
-	}
-	
-	/**
-	 * Replaces a space on the grid with a piece
-	 * Places the piece where its stored coordinates say it should be
-	 * @param piece the piece to be moved/placed
-	 */
-	public void replaceGridPiece(Piece piece)
-	{
-		//Equation for calculating the index of a piece on the grid: index = r * cols + c
-		int index = piece.getRow() * GRID_DIMENSION + piece.getCol();
-		gridPanel.remove(index);
-		gridPanel.add(piece, index);
-		gridPanel.getComponent(index).setBackground(Color.GREEN);
-		gridPanel.revalidate();
-		gridPanel.repaint();
+		gridArray[row][col].setBackground(color);
 	}
 	
 	/**
@@ -305,6 +251,11 @@ public class SnakeView extends View {
 		
 		repaint();
 		revalidate();
+	}
+	
+	public JPanel getPanelAtCoordinates(int row, int col)
+	{
+		return gridArray[row][col];
 	}
 	
 	/**

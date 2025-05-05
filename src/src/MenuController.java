@@ -3,13 +3,14 @@ package src;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+//MenuController is-a Controller
 public class MenuController extends Controller {
 	
-	//
+	//Controller has-a model
 	private MenuModel model;
 	
 	/**
-	 * 
+	 * Instantiate model
 	 * @param model
 	 */
 	public MenuController(MenuModel model)
@@ -33,10 +34,15 @@ public class MenuController extends Controller {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+		//Get the numeric value of the key pressed
 		int keyCode = e.getKeyCode();
+		
+		//Test code
 		System.out.println(keyCode);
 		System.out.println(KeyEvent.VK_ENTER);
 		System.out.println(KeyEvent.VK_SPACE);
+		
+		//If the key pressed is space of enter, tell model to start game
 		if(keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_ENTER)
 		{
 			model.startGame();
@@ -44,9 +50,9 @@ public class MenuController extends Controller {
 		
 	}
 
+	//Unused
 	@Override
 	public void keyTyped(KeyEvent e) {}
-
 	@Override
 	public void keyReleased(KeyEvent e) {}
 

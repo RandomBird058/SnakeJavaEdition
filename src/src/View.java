@@ -7,6 +7,7 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
+//Font: Public Pixel - https://www.fontspace.com/public-pixel-font-f72305
 public class View extends JFrame {
 	
 	//The file holding the text font

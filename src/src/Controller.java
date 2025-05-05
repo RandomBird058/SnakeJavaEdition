@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JComponent;
 
+//Controller is-a Action Listener, KeyListener
 public abstract class Controller implements ActionListener, KeyListener{
 	
 	//Action listener method

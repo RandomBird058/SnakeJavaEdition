@@ -1,16 +1,16 @@
 package src;
 
-import java.awt.Color;
-
 import javax.swing.JPanel;
 
+//Piece is-a JPanel
 public class Piece extends JPanel{
 	
+	//Piece has-a row and column
 	private int row;
 	private int col;
 	
 	/**
-	 * 
+	 * Initialize the row and column of the piece
 	 * @param row
 	 * @param col
 	 */
@@ -19,10 +19,10 @@ public class Piece extends JPanel{
 		this.row = row;
 		this.col = col;
 	}
-	
+
 	/**
-	 * 
-	 * @return
+	 * Get the row of the piece
+	 * @return The row of the piece
 	 */
 	public int getRow()
 	{
@@ -30,8 +30,8 @@ public class Piece extends JPanel{
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Get the column of the piece
+	 * @return The Column of the piece
 	 */
 	public int getCol()
 	{
@@ -39,8 +39,8 @@ public class Piece extends JPanel{
 	}
 	
 	/**
-	 * 
-	 * @param row
+	 * Set the row to inputed value
+	 * @param row The new row of the piece
 	 */
 	public void setRow(int row)
 	{
@@ -48,8 +48,8 @@ public class Piece extends JPanel{
 	}
 	
 	/**
-	 * 
-	 * @param col
+	 * Set the column to inputed value
+	 * @param col The new column of the piece
 	 */
 	public void setCol(int col)
 	{

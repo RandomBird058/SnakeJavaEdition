@@ -49,7 +49,7 @@ public class MenuView extends View {
 	private JLabel goalsEatenLabel;
 
 	/**
-	 * TODO
+	 * Call View constructor, Instantiate model/controller, build window
 	 */
 	public MenuView() {
 		super();
@@ -142,7 +142,6 @@ public class MenuView extends View {
 	
 	/**
 	 * Instantiates the components for stats area and adds to the frame south
-
 	 */
 	private void createStats()
 	{

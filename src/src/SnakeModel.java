@@ -9,10 +9,14 @@ public class SnakeModel extends Model {
 	//
 	SnakeView view;
 	
-	//Instantiate list to store snake piece in order
+	//Declare list to store snake piece in order
 	private LinkedList<Piece> snakeList;
-	//Instantiate list to store goal pieces (For possible implementation of several goals active at once)
+	//Declare list to store goal pieces (For possible implementation of several goals active at once)
 	private LinkedList<Piece> goalList;
+	
+	//Declare char to hold blocked direction (U up, D down, L left, R right)
+	//Snake cannot move in this direction
+	private char blockDirection;
 	
 	/**
 	 * 
@@ -23,11 +27,18 @@ public class SnakeModel extends Model {
 		super();
 		this.view = view;
 		
+		//Instantiate direction as down to start
+		blockDirection = 'D';
+		
 		//List that will hold all of the pieces that comprise the snake
 		snakeList = new LinkedList<>();
 		
 		//List that will hold all of the goals in play
 		goalList = new LinkedList<>();
+		
+		//Create the first goal piece and generate viable coordinates
+		goalList.addLast(new Piece(-1, -1));
+		generateGoalCoordinates(goalList.getLast());
 	}
 	
 	/**
@@ -48,7 +59,7 @@ public class SnakeModel extends Model {
 	 * Generates the position of the goal, making sure there are no pieces in the way
 	 * Adds the goal to the list and makes it visible
 	 */
-	public void generateGoal()
+	public void generateGoalCoordinates(Piece goal)
 	{
 		//Confirms if the generated coordinates are clear or not
 		boolean clear = false;
@@ -74,11 +85,68 @@ public class SnakeModel extends Model {
 			}
 		}
 		
-		//Make piece with confirmed coordinates
-		goalList.addLast(new Piece(row, col));
+		//Set the goal's coordinates to the confirmed coordinates
+		goal.setRow(row);
+		goal.setCol(col);
 		
 		//Make it visible
 		view.setPieceColor(goalList.getLast().getRow(), goalList.getLast().getCol(), View.GOAL_COLOR);
+	}
+	
+	/**
+	 * Checks if the snake has reached the goal. If yes, generate new goal coordinates and TODO: create a new tail piece
+	 */
+	private void checkGoalCollision()
+	{
+		//Store coordinates of the head of the snake
+		int snakeRow = snakeList.getFirst().getRow();
+		int snakeCol = snakeList.getFirst().getCol();
+	
+		//For every active goal
+		for(int i = 0; i < goalList.size(); i++)
+		{
+			int goalRow = goalList.get(i).getRow();
+			int goalCol = goalList.get(i).getCol();
+			
+			//If the snake has reached the goal, generate new coordinates for the goal
+			if(snakeRow == goalRow && snakeCol == goalCol)
+			{
+				System.out.println("Goal reached");
+				generateGoalCoordinates(goalList.get(i));
+			}
+		}
+	}
+	
+	private void checkBodyCollision()
+	{
+		//Coorinates of the head
+		int headRow = snakeList.getFirst().getRow();
+		int headCol = snakeList.getFirst().getCol();
+		
+		//For all pieces in snake list excluding head, check for collision with head
+		for(int i = 1; i < snakeList.size(); i++)
+		{
+			//Coordinates of the piece to compare
+			int pieceRow = snakeList.get(i).getRow();
+			int pieceCol = snakeList.get(i).getCol();
+			
+			//If head coordinates are same as body piece coordinates, game over
+			if(headRow == pieceRow && headCol == pieceCol)
+			{
+				System.out.println("Body collision");
+				displayGameOver();
+			}
+		}
+	}
+	
+	//TODO
+	private void checkOutOfBounds()
+	{
+		//Coorinates of the head
+		int headRow = snakeList.getFirst().getRow();
+		int headCol = snakeList.getFirst().getCol();
+		
+		
 	}
 			
 	
@@ -115,48 +183,92 @@ public class SnakeModel extends Model {
 		view.setPieceColor(snakeList.getFirst().getRow(), snakeList.getFirst().getCol(), View.SNAKE_COLOR);
 		
 	}
-	//TODO: There's some sort of problem with movement towards the beginning that fixes itself after you press enough directions?
+	
 	/**
 	 * 
 	 */
 	public void moveUp()
 	{
-		//Move the back piece to the front
-		moveBackFront();
-		
-		//Move the piece at the front to the right coordinates and display change
-		//Moving one row above piece behind it
-		moveFrontPiece(snakeList.get(1).getRow() - 1, snakeList.get(1).getCol());
+		//If it didn't move up last turn
+		if(blockDirection != 'U')
+		{
+			//Move the back piece to the front
+			moveBackFront();
+			
+			//Move the piece at the front to the right coordinates and display change
+			//Moving one row above piece behind it
+			moveFrontPiece(snakeList.get(1).getRow() - 1, snakeList.get(1).getCol());
+			
+			//Check collisions
+			checkGoalCollision();
+			checkBodyCollision();
+			
+			//Update last direction
+			blockDirection = 'D';
+		}
 	}
 	
 	public void moveDown()
 	{
-		//Move the back piece to the front
-		moveBackFront();
-		
-		//Move the piece at the front to the right coordinates and display change
-		//Moving one row below piece behind it
-		moveFrontPiece(snakeList.get(1).getRow() + 1, snakeList.get(1).getCol());
+		//If it didn't move down last turn
+		if(blockDirection != 'D')
+		{
+			//Move the back piece to the front
+			moveBackFront();
+			
+			//Move the piece at the front to the right coordinates and display change
+			//Moving one row below piece behind it
+			moveFrontPiece(snakeList.get(1).getRow() + 1, snakeList.get(1).getCol());
+			
+			//Check collisions
+			checkGoalCollision();
+			checkBodyCollision();
+			
+			//Update last direction
+			blockDirection = 'U';
+		}
 	}
 	
 	public void moveLeft()
 	{
-		//Move the back piece to the front
-		moveBackFront();
-		
-		//Move the piece at the front to the right coordinates and display change
-		//Moving one col left of the piece behind it
-		moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() - 1);
+		//If it didn't move left last turn
+		if(blockDirection != 'L')
+		{
+			//Move the back piece to the front
+			moveBackFront();
+			
+			//Move the piece at the front to the right coordinates and display change
+			//Moving one col left of the piece behind it
+			moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() - 1);
+			
+			//Check collisions
+			checkGoalCollision();
+			checkBodyCollision();
+			
+			//Update last direction
+			blockDirection = 'R';
+		}
 	}
 	
 	public void moveRight()
 	{
-		//Move the back piece to the front
-		moveBackFront();
-		
-		//Move the piece at the front to the right coordinates and display change
-		//Moving one col right of the piece behind it
-		moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() + 1);
+		//If it didn't move right last turn
+		if(blockDirection != 'R')
+		{
+			//Move the back piece to the front
+			moveBackFront();
+			
+			//Move the piece at the front to the right coordinates and display change
+			//Moving one col right of the piece behind it
+			moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() + 1);
+			
+			//Check collisions
+			checkGoalCollision();
+			checkBodyCollision();
+			
+			//Update last direction
+			blockDirection = 'L';
+		}
 	}
 	
 	/**

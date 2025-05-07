@@ -82,6 +82,12 @@ public class MenuView extends View {
 		createStart();
 		createStats();
 		
+		//Window listens for keyboard input
+		addKeyListener(controller);
+		
+		//Take focus away from the button
+		requestFocus();
+		
 		setVisible(true);
 	}
 	

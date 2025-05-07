@@ -58,8 +58,6 @@ public class SnakeView extends View {
 	 */
 	public SnakeView()
 	{
-		model = new SnakeModel(this);
-		controller = new SnakeController(model);
 		
 		//Get screen size using java toolkit
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -82,17 +80,16 @@ public class SnakeView extends View {
 		//Private method creates the grid
 		createGrid();
 		
+		model = new SnakeModel(this);
+		controller = new SnakeController(model);
+		
 		//Start the snake by adding two snake pieces to the list in model
 		//Do not move to model b/c it causes problems!!!
 		model.addSnakePiece((int)(GRID_DIMENSION /2), (int)(GRID_DIMENSION /2));
-		model.addSnakePiece((int)(GRID_DIMENSION /2) - 1, (int)(GRID_DIMENSION /2));
-//		model.addSnakePiece((int)(GRID_DIMENSION /2) - 2, (int)(GRID_DIMENSION /2));
-//		model.addSnakePiece((int)(GRID_DIMENSION /3) - 2, (int)(GRID_DIMENSION /2));
-//		model.addSnakePiece((int)(GRID_DIMENSION /4) - 2, (int)(GRID_DIMENSION /2));
-		
-		//Generate the first goal
-		//Do not move to model b/c it causes problems!!!
-		model.generateGoal();
+		model.addSnakePiece((int)(GRID_DIMENSION /2) + 1, (int)(GRID_DIMENSION /2));
+		model.addSnakePiece((int)(GRID_DIMENSION /2) + 2, (int)(GRID_DIMENSION /2));
+		model.addSnakePiece((int)(GRID_DIMENSION /2) + 3, (int)(GRID_DIMENSION /2));
+		model.addSnakePiece((int)(GRID_DIMENSION /2) + 4, (int)(GRID_DIMENSION /2));
 				
 		//Add key listener to the view window
 		addKeyListener(controller);

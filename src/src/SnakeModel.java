@@ -1,12 +1,11 @@
 package src;
 
-import java.awt.Color;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class SnakeModel extends Model {
 	
-	//
+	//Declare the view to display the window
 	SnakeView view;
 	
 	//Declare list to store snake piece in order
@@ -23,7 +22,7 @@ public class SnakeModel extends Model {
 	
 	/**
 	 * 
-	 * @param view
+	 * @param view the view that the model will give commands to
 	 */
 	public SnakeModel(SnakeView view)
 	{
@@ -120,6 +119,8 @@ public class SnakeModel extends Model {
 				System.out.println("Goal reached");
 				goalsEaten++;
 				generateGoalCoordinates(goalList.get(i));
+				//Add a snake piece to the end of the list
+				addSnakePiece(snakeList.getLast().getRow(), snakeList.getLast().getCol());
 			}
 		}
 	}
@@ -317,6 +318,7 @@ public class SnakeModel extends Model {
 	public void displayGameOver()
 	{
 		view.gameOver();
+		
 		System.out.println("DisplayGameOver");
 	}
 	
@@ -328,5 +330,6 @@ public class SnakeModel extends Model {
 		createMenuWindow();
 		view.close();
 	}
+	
 	
 }

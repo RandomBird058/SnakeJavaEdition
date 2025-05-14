@@ -87,9 +87,9 @@ public class SnakeView extends View {
 		//Do not move to model b/c it causes problems!!!
 		model.addSnakePiece((int)(GRID_DIMENSION /2), (int)(GRID_DIMENSION /2));
 		model.addSnakePiece((int)(GRID_DIMENSION /2) + 1, (int)(GRID_DIMENSION /2));
-		model.addSnakePiece((int)(GRID_DIMENSION /2) + 2, (int)(GRID_DIMENSION /2));
-		model.addSnakePiece((int)(GRID_DIMENSION /2) + 3, (int)(GRID_DIMENSION /2));
-		model.addSnakePiece((int)(GRID_DIMENSION /2) + 4, (int)(GRID_DIMENSION /2));
+//		model.addSnakePiece((int)(GRID_DIMENSION /2) + 2, (int)(GRID_DIMENSION /2));
+//		model.addSnakePiece((int)(GRID_DIMENSION /2) + 3, (int)(GRID_DIMENSION /2));
+//		model.addSnakePiece((int)(GRID_DIMENSION /2) + 4, (int)(GRID_DIMENSION /2));
 				
 		//Add key listener to the view window
 		addKeyListener(controller);
@@ -217,8 +217,10 @@ public class SnakeView extends View {
 		gameOverLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowDimension / 6)));
 		returnButton.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowDimension / 6)));
 		
-		//Window no longer takes in key inputs
+		//Window no longer takes in inputs from controller
 		removeKeyListener(controller);
+		//Stops the timer in the controller
+		controller.stopMoveTimer();
 		
 		//Remove the grid from the screen
 		remove(gridPanel);

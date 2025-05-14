@@ -14,9 +14,12 @@ public class SnakeModel extends Model {
 	//Declare list to store goal pieces (For possible implementation of several goals active at once)
 	private LinkedList<Piece> goalList;
 	
-	//Declare char to hold blocked direction (U up, D down, L left, R right)
+	//Declare integer to hold blocked direction (1 Up, 2 Down, 3 Left, 4 Right)
 	//Snake cannot move in this direction
-	private char blockDirection;
+	private int blockedDirection;
+	
+	//Declare int to hold goals eaten this game TODO: Display on game over screen (low priority)
+	private int goalsEaten;
 	
 	/**
 	 * 
@@ -27,8 +30,11 @@ public class SnakeModel extends Model {
 		super();
 		this.view = view;
 		
-		//Instantiate direction as down to start
-		blockDirection = 'D';
+		//Instantiate blocked direction as down to start
+		blockedDirection = 2;
+		
+		//instantiate goals eaten as 0
+		goalsEaten = 0;
 		
 		//List that will hold all of the pieces that comprise the snake
 		snakeList = new LinkedList<>();
@@ -98,7 +104,7 @@ public class SnakeModel extends Model {
 	 */
 	private void checkGoalCollision()
 	{
-		//Store coordinates of the head of the snake
+		//Coordinates of the head
 		int snakeRow = snakeList.getFirst().getRow();
 		int snakeCol = snakeList.getFirst().getCol();
 	
@@ -108,10 +114,11 @@ public class SnakeModel extends Model {
 			int goalRow = goalList.get(i).getRow();
 			int goalCol = goalList.get(i).getCol();
 			
-			//If the snake has reached the goal, generate new coordinates for the goal
+			//If the snake has reached the goal, generate new coordinates for the goal. Increment goals eaten
 			if(snakeRow == goalRow && snakeCol == goalCol)
 			{
 				System.out.println("Goal reached");
+				goalsEaten++;
 				generateGoalCoordinates(goalList.get(i));
 			}
 		}
@@ -119,7 +126,7 @@ public class SnakeModel extends Model {
 	
 	private void checkBodyCollision()
 	{
-		//Coorinates of the head
+		//Coordinates of the head
 		int headRow = snakeList.getFirst().getRow();
 		int headCol = snakeList.getFirst().getCol();
 		
@@ -139,17 +146,33 @@ public class SnakeModel extends Model {
 		}
 	}
 	
-	//TODO
-	private void checkOutOfBounds()
+	/**
+	 * Checks if a movement in a certain direction will move the snake out of bounds
+	 * @param row The row direction requested to move in
+	 * @param col The column direction requested to move in
+	 * @return true if safe to move, false if unsafe
+	 */
+	private boolean checkOutOfBounds(int row, int col)
 	{
-		//Coorinates of the head
+		//Coordinates of the head
 		int headRow = snakeList.getFirst().getRow();
 		int headCol = snakeList.getFirst().getCol();
 		
-		
+		//If head's row + the direction is less then 0 or greater than the grid
+		if(headRow + row < 0 || headRow + row == SnakeView.GRID_DIMENSION)
+		{
+			displayGameOver();
+			return false;
+		}
+		//If head's col + the direction is less then 0 or greater than the grid
+		if(headCol + col < 0 || headCol + col == SnakeView.GRID_DIMENSION)
+		{
+			displayGameOver();
+			return false;
+		}
+		return true;
 	}
 			
-	
 	/**
 	 * Move the piece at the back of the snake list to the front
 	 */
@@ -189,85 +212,102 @@ public class SnakeModel extends Model {
 	 */
 	public void moveUp()
 	{
-		//If it didn't move up last turn
-		if(blockDirection != 'U')
+		//If up isn't blocked
+		if(blockedDirection != 1)
 		{
-			//Move the back piece to the front
-			moveBackFront();
-			
-			//Move the piece at the front to the right coordinates and display change
-			//Moving one row above piece behind it
-			moveFrontPiece(snakeList.get(1).getRow() - 1, snakeList.get(1).getCol());
-			
-			//Check collisions
-			checkGoalCollision();
-			checkBodyCollision();
-			
-			//Update last direction
-			blockDirection = 'D';
+			//If safe to move
+			if(checkOutOfBounds(-1, 0))
+			{
+				//Move the back piece to the front
+				moveBackFront();
+				
+				//Move the piece at the front to the right coordinates and display change
+				//Moving one row above piece behind it
+				moveFrontPiece(snakeList.get(1).getRow() - 1, snakeList.get(1).getCol());
+				
+				//Check collisions
+				checkGoalCollision();
+				checkBodyCollision();
+				
+				//Block down
+				blockedDirection = 2;
+			}
 		}
 	}
 	
 	public void moveDown()
 	{
-		//If it didn't move down last turn
-		if(blockDirection != 'D')
+		//If down isn't blocked
+		if(blockedDirection != 2)
 		{
-			//Move the back piece to the front
-			moveBackFront();
-			
-			//Move the piece at the front to the right coordinates and display change
-			//Moving one row below piece behind it
-			moveFrontPiece(snakeList.get(1).getRow() + 1, snakeList.get(1).getCol());
-			
-			//Check collisions
-			checkGoalCollision();
-			checkBodyCollision();
-			
-			//Update last direction
-			blockDirection = 'U';
+			//If safe to move
+			if(checkOutOfBounds(1, 0))
+			{
+				//Move the back piece to the front
+				moveBackFront();
+				
+				//Move the piece at the front to the right coordinates and display change
+				//Moving one row below piece behind it
+				moveFrontPiece(snakeList.get(1).getRow() + 1, snakeList.get(1).getCol());
+				
+				//Check collisions
+				checkGoalCollision();
+				checkBodyCollision();
+				
+				//Block up
+				blockedDirection = 1;
+			}
 		}
 	}
 	
 	public void moveLeft()
 	{
-		//If it didn't move left last turn
-		if(blockDirection != 'L')
+		//If left isn't blocked
+		if(blockedDirection != 3)
 		{
-			//Move the back piece to the front
-			moveBackFront();
-			
-			//Move the piece at the front to the right coordinates and display change
-			//Moving one col left of the piece behind it
-			moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() - 1);
-			
-			//Check collisions
-			checkGoalCollision();
-			checkBodyCollision();
-			
-			//Update last direction
-			blockDirection = 'R';
+			//If safe to move
+			if(checkOutOfBounds(0, -1))
+			{
+				//Move the back piece to the front
+				moveBackFront();
+				
+				//Move the piece at the front to the right coordinates and display change
+				//Moving one col left of the piece behind it
+				moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() - 1);
+				
+				//Check collisions
+				checkGoalCollision();
+				checkBodyCollision();
+				
+				//Block right
+				blockedDirection = 4;
+			}
 		}
 	}
 	
 	public void moveRight()
 	{
-		//If it didn't move right last turn
-		if(blockDirection != 'R')
+		
+		//If right isn't blocked
+		if(blockedDirection != 4)
 		{
-			//Move the back piece to the front
-			moveBackFront();
-			
-			//Move the piece at the front to the right coordinates and display change
-			//Moving one col right of the piece behind it
-			moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() + 1);
-			
-			//Check collisions
-			checkGoalCollision();
-			checkBodyCollision();
-			
-			//Update last direction
-			blockDirection = 'L';
+			//If safe to move
+			if(checkOutOfBounds(0, 1))
+			{
+				//Move the back piece to the front
+				moveBackFront();
+				
+				//Move the piece at the front to the right coordinates and display change
+				//Moving one col right of the piece behind it
+				moveFrontPiece(snakeList.get(1).getRow(), snakeList.get(1).getCol() + 1);
+				
+				//Check collisions
+				checkGoalCollision();
+				checkBodyCollision();
+				
+				//Block left
+				blockedDirection = 3;
+			}
 		}
 	}
 	

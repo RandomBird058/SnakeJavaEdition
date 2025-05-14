@@ -10,7 +10,6 @@ public class TestAndExecute{
 	public static void main(String[] args) {
 		TestAndExecute test = new TestAndExecute();
 		test.execute();
-		//test.testGameOver();
 	}
 	
 	/**

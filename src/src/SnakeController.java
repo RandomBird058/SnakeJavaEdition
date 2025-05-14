@@ -17,12 +17,16 @@ public class SnakeController extends Controller{
 	//SnakeController has-a lastMove which stores the last direction moved
 	private int lastMove;
 	
+	//Time between auto moves
+	private int timerDelay;
+	
 	
 	public SnakeController(SnakeModel model)
 	{
 		this.model = model;
 		lastMove = KeyEvent.VK_S;
-		moveTimer = new Timer(500, this);
+		timerDelay = 200;
+		moveTimer = new Timer(timerDelay, this);
 		moveTimer.start();
 	}
 	
@@ -78,45 +82,53 @@ public class SnakeController extends Controller{
 		//Up
 		if(input == KeyEvent.VK_W || input == KeyEvent.VK_UP)
 		{
-			model.moveUp();
-			
-			//Reset the timer
-			moveTimer.restart();
-			//Change last move to up
-			lastMove = KeyEvent.VK_W;
+			//If move is successful
+			if(model.moveUp())
+			{
+				//Reset the timer
+				moveTimer.restart();
+				//Change last move to up
+				lastMove = KeyEvent.VK_W;
+			}
 		}
 		
 		//Down
 		if(input == KeyEvent.VK_S || input == KeyEvent.VK_DOWN)
 		{
-			model.moveDown();
-			
-			//Reset the timer
-			moveTimer.restart();
-			//Change last move to down
-			lastMove = KeyEvent.VK_S;
+			//If move is successful
+			if(model.moveDown())
+			{
+				//Reset the timer
+				moveTimer.restart();
+				//Change last move to down
+				lastMove = KeyEvent.VK_S;
+			}
 		}
 		
 		//Left
 		if(input == KeyEvent.VK_A || input == KeyEvent.VK_LEFT)
 		{
-			model.moveLeft();
-			
-			//Reset the timer
-			moveTimer.restart();
-			//Change last move to left
-			lastMove = KeyEvent.VK_A;
+			//If move is successful
+			if(model.moveLeft())
+			{
+				//Reset the timer
+				moveTimer.restart();
+				//Change last move to left
+				lastMove = KeyEvent.VK_A;
+			}
 		}
 		
 		//Right
 		if(input == KeyEvent.VK_D || input == KeyEvent.VK_RIGHT)
 		{
-			model.moveRight();
-			
-			//Reset the timer
-			moveTimer.restart();
-			//Change last move to right
-			lastMove = KeyEvent.VK_D;
+			//If move is successful
+			if(model.moveRight())
+			{
+				//Reset the timer
+				moveTimer.restart();
+				//Change last move to right
+				lastMove = KeyEvent.VK_D;
+			}
 		}
 	}
 

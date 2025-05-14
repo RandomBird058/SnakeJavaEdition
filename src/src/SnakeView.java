@@ -58,7 +58,6 @@ public class SnakeView extends View {
 	 */
 	public SnakeView()
 	{
-		
 		//Get screen size using java toolkit
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		

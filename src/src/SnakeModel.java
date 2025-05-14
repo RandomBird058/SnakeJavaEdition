@@ -95,7 +95,7 @@ public class SnakeModel extends Model {
 		goal.setCol(col);
 		
 		//Make it visible
-		view.setPieceColor(goalList.getLast().getRow(), goalList.getLast().getCol(), View.GOAL_COLOR);
+		view.setPieceColor(goal.getRow(), goal.getCol(), View.GOAL_COLOR);
 	}
 	
 	/**
@@ -121,6 +121,11 @@ public class SnakeModel extends Model {
 				generateGoalCoordinates(goalList.get(i));
 				//Add a snake piece to the end of the list
 				addSnakePiece(snakeList.getLast().getRow(), snakeList.getLast().getCol());
+				//Every 5 goals eaten, level up
+				if(goalsEaten % 5 == 0)
+				{
+					levelUp();
+				}
 			}
 		}
 	}
@@ -211,7 +216,7 @@ public class SnakeModel extends Model {
 	/**
 	 * 
 	 */
-	public void moveUp()
+	public boolean moveUp()
 	{
 		//If up isn't blocked
 		if(blockedDirection != 1)
@@ -232,11 +237,16 @@ public class SnakeModel extends Model {
 				
 				//Block down
 				blockedDirection = 2;
+				
+				//Successful
+				return true;
 			}
 		}
+		//Not successful
+		return false;
 	}
 	
-	public void moveDown()
+	public boolean moveDown()
 	{
 		//If down isn't blocked
 		if(blockedDirection != 2)
@@ -257,11 +267,16 @@ public class SnakeModel extends Model {
 				
 				//Block up
 				blockedDirection = 1;
+				
+				//Successful
+				return true;
 			}
 		}
+		//Not successful
+		return false;
 	}
 	
-	public void moveLeft()
+	public boolean moveLeft()
 	{
 		//If left isn't blocked
 		if(blockedDirection != 3)
@@ -282,11 +297,16 @@ public class SnakeModel extends Model {
 				
 				//Block right
 				blockedDirection = 4;
+				
+				//Successful
+				return true;
 			}
 		}
+		//Not successful
+		return false;
 	}
 	
-	public void moveRight()
+	public boolean moveRight()
 	{
 		
 		//If right isn't blocked
@@ -308,8 +328,22 @@ public class SnakeModel extends Model {
 				
 				//Block left
 				blockedDirection = 3;
+				
+				//Successful
+				return true;
 			}
 		}
+		//Not successful
+		return false;
+	}
+	
+	/**
+	 * Every
+	 */
+	public void levelUp()
+	{
+		goalList.addLast(new Piece(-1, -1));
+		generateGoalCoordinates(goalList.getLast());
 	}
 	
 	/**

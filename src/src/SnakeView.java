@@ -20,9 +20,9 @@ import javax.swing.JPanel;
 public class SnakeView extends View {
 	
 	//The scalar for the size of the window
-	private static final double WINDOW_SCALAR = 1.25;
+	private static final double WINDOW_SCALAR = 1.1;
 	//The value for how many grid spaces there will be in the grid
-	protected static final int GRID_DIMENSION = 15;
+	protected static final int GRID_DIMENSION = 16;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;
@@ -86,9 +86,6 @@ public class SnakeView extends View {
 		//Do not move to model b/c it causes problems!!!
 		model.addSnakePiece((int)(GRID_DIMENSION /2), (int)(GRID_DIMENSION /2));
 		model.addSnakePiece((int)(GRID_DIMENSION /2) + 1, (int)(GRID_DIMENSION /2));
-//		model.addSnakePiece((int)(GRID_DIMENSION /2) + 2, (int)(GRID_DIMENSION /2));
-//		model.addSnakePiece((int)(GRID_DIMENSION /2) + 3, (int)(GRID_DIMENSION /2));
-//		model.addSnakePiece((int)(GRID_DIMENSION /2) + 4, (int)(GRID_DIMENSION /2));
 				
 		//Add key listener to the view window
 		addKeyListener(controller);
@@ -132,42 +129,36 @@ public class SnakeView extends View {
 	}
 	
 	/**
-	 * Determines the color of a grid piece by making it the opposite of the piece before it. 
-	 * Initializes color of the first grid piece.
+	 * Determines the color of a grid piece using a binary matrix.
 	 * @param row row of the piece
 	 * @param col column of the piece
 	 */
 	public void setGridColor(int row, int col)
 	{
-		//If the grid piece is the first, make its color one
-		if(row == 0 && col == 0)
+		/**		
+		 * The binary matrix for the grid for alternating colors is as follows:
+		 * (1 means even num, 0 means odd num)
+		 * 		c1	c2	c3	c4	cn
+		 * r1	00	01	00	01	0n
+		 * r2	10	11	10	11	1n
+		 * r3	00	01	00	01	0n
+		 * r4	10	11	10	11	1n
+		 * rn	n0	n1	n0	n1	nn
+		 * So if the row and column are both even or both odd, one color.
+		 * If only one is even or odd, other color.
+		 * (Add 1 so that the smallest possible row/col value is 1, not 0. 0 messes everything up)
+		 */
+		//If row and col are both even or both odd
+		if(((row + 1) % 2) == ((col + 1) % 2))
 		{
+			//This color
 			gridArray[row][col].setBackground(GRID_COLOR_1);
 		}
-		
-		//Else if grid piece is in column 0, make it the opposite of the piece directly above it
-		else if(col == 0)
-		{
-			if(gridArray[row - 1][col].getBackground() == GRID_COLOR_1)
-			{
-				gridArray[row][col].setBackground(GRID_COLOR_2);
-			}
-			else
-			{
-				gridArray[row][col].setBackground(GRID_COLOR_1);
-			}
-		}
-		//Else make the color the opposite of the grid piece before it
+		//If row and col are not both even or odd
 		else
 		{
-			if(gridArray[row][col - 1].getBackground() == GRID_COLOR_1)
-			{
-				gridArray[row][col].setBackground(GRID_COLOR_2);
-			}
-			else
-			{
-				gridArray[row][col].setBackground(GRID_COLOR_1);
-			}
+			//Other color
+			gridArray[row][col].setBackground(GRID_COLOR_2);
 		}
 	}
 	
@@ -245,5 +236,10 @@ public class SnakeView extends View {
 	public SnakeModel getModel()
 	{
 		return model;
+	}
+
+	public JPanel getPieceAt(int row, int col) {
+		
+		return gridArray[row][col];
 	}
 }

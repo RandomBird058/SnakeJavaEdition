@@ -17,6 +17,9 @@ public class SnakeModel extends Model {
 	//Snake cannot move in this direction
 	private int blockedDirection;
 	
+//	//Booleans for if moving in a certain direction is safe. Checked every move
+//	private boolean upSafe, downSafe, leftSafe, rightsafe;
+	
 	//Declare int to hold goals eaten this game TODO: Display on game over screen (low priority)
 	private int goalsEaten;
 	
@@ -121,8 +124,8 @@ public class SnakeModel extends Model {
 				generateGoalCoordinates(goalList.get(i));
 				//Add a snake piece to the end of the list
 				addSnakePiece(snakeList.getLast().getRow(), snakeList.getLast().getCol());
-				//Every 5 goals eaten, level up
-				if(goalsEaten % 5 == 0)
+				//Every 10 goals eaten, level up
+				if(goalsEaten % 10 == 0)
 				{
 					levelUp();
 				}
@@ -132,6 +135,7 @@ public class SnakeModel extends Model {
 	
 	private void checkBodyCollision()
 	{
+		//TODO: Optimization is very needed
 		//Coordinates of the head
 		int headRow = snakeList.getFirst().getRow();
 		int headCol = snakeList.getFirst().getCol();

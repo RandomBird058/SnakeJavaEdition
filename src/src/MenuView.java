@@ -154,10 +154,9 @@ public class MenuView extends View {
 		//Instantiate panel to hold stats labels
 		statsPanel = new JPanel();
 		
-		//TODO: Add the numbers from model/stats class
 		//Instantiate labels to display the stats
-		timesPlayedLabel = new JLabel("Times played: __");
-		goalsEatenLabel = new JLabel("Goals eaten: __");
+		timesPlayedLabel = new JLabel(model.getGamesMessage());
+		goalsEatenLabel = new JLabel(model.getGoalsMessage());
 		
 		//Decorate components
 		//Colors

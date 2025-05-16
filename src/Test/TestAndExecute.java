@@ -6,10 +6,13 @@ import src.*;
 public class TestAndExecute{
 	
 	Model model;
+	Stats stats;
 
 	public static void main(String[] args) {
 		TestAndExecute test = new TestAndExecute();
 		test.execute();
+//		test.testCheckFormat();
+//		test.testGetGoalsGetGames();
 	}
 	
 	/**
@@ -53,6 +56,17 @@ public class TestAndExecute{
 	{
 		SnakeView snakeView = new SnakeView();
 		snakeView.getModel().displayGameOver();
+	}
+	
+	private void testCheckFormat()
+	{
+		stats = new Stats();
+		System.out.println(stats.checkFormat());
+	}
+	
+	private void testGetGoalsGetGames()
+	{
+		System.out.println("Games: " + stats.getGamesPlayed() + " Goals: " + stats.getGoalsEaten());
 	}
 
 }

@@ -25,7 +25,7 @@ public class SnakeController extends Controller{
 	{
 		this.model = model;
 		lastMove = KeyEvent.VK_S;
-		timerDelay = 200;
+		timerDelay = 250;
 		moveTimer = new Timer(timerDelay, this);
 		moveTimer.start();
 	}

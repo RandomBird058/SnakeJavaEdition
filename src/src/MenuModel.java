@@ -4,7 +4,8 @@ package src;
 public class MenuModel extends Model{
 	
 	//has-a view
-	MenuView view;
+	private MenuView view;
+	private Stats stats;
 
 	/**
 	 * Call constructor of Model, Instantiate view
@@ -14,6 +15,7 @@ public class MenuModel extends Model{
 	{
 		super();
 		this.view = view;
+		stats = new Stats();
 	}
 	
 	/**
@@ -23,6 +25,25 @@ public class MenuModel extends Model{
 	{
 		createSnakeWindow();
 		view.close();
+	}
+	
+	//TODO: Eats goals / start to play messages won't appear
+	public String getGoalsMessage()
+	{
+		if(stats.getGoalsEaten() != "0")
+		{
+			return "Times played: " + stats.getGoalsEaten();
+		}
+		return "Eat Goals!";
+	}
+	
+	public String getGamesMessage()
+	{
+		if(stats.getGamesPlayed() != "0")
+		{
+			return "Goals eaten: " + stats.getGamesPlayed();
+		}
+		return "Press Start to play!";
 	}
 
 }

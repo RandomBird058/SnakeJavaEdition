@@ -10,12 +10,15 @@ public class SnakeModel extends Model {
 	
 	//Declare list to store snake piece in order
 	private LinkedList<Piece> snakeList;
-	//Declare list to store goal pieces (For possible implementation of several goals active at once)
+	//Declare list to store goal pieces
 	private LinkedList<Piece> goalList;
 	
 	//Declare integer to hold blocked direction (1 Up, 2 Down, 3 Left, 4 Right)
 	//Snake cannot move in this direction
 	private int blockedDirection;
+	
+	//
+	private boolean paused;
 	
 //	//Booleans for if moving in a certain direction is safe. Checked every move
 //	private boolean upSafe, downSafe, leftSafe, rightsafe;
@@ -34,6 +37,9 @@ public class SnakeModel extends Model {
 		
 		//Instantiate blocked direction as down to start
 		blockedDirection = 2;
+		
+		//The game isn't paused to begin
+		paused = false;
 		
 		//instantiate goals eaten as 0
 		goalsEaten = 0;
@@ -82,8 +88,8 @@ public class SnakeModel extends Model {
 		//While space is not confirmed clear
 		while(!clear)
 		{
-			row = randCoord.nextInt(SnakeView.GRID_DIMENSION - 1);
-			col = randCoord.nextInt(SnakeView.GRID_DIMENSION - 1);
+			row = randCoord.nextInt(SnakeView.GRID_DIMENSION);
+			col = randCoord.nextInt(SnakeView.GRID_DIMENSION);
 			
 			//Get JPanel at coordinates. If it is not the same color as the snake, must be clear.
 			//More efficient than going through entire snakeList comparing coordinates
@@ -222,8 +228,8 @@ public class SnakeModel extends Model {
 	 */
 	public boolean moveUp()
 	{
-		//If up isn't blocked
-		if(blockedDirection != 1)
+		//If up isn't blocked and not paused
+		if(blockedDirection != 1 && !paused)
 		{
 			//If safe to move
 			if(checkOutOfBounds(-1, 0))
@@ -252,8 +258,8 @@ public class SnakeModel extends Model {
 	
 	public boolean moveDown()
 	{
-		//If down isn't blocked
-		if(blockedDirection != 2)
+		//If down isn't blocked and not paused
+		if(blockedDirection != 2 && !paused)
 		{
 			//If safe to move
 			if(checkOutOfBounds(1, 0))
@@ -282,8 +288,8 @@ public class SnakeModel extends Model {
 	
 	public boolean moveLeft()
 	{
-		//If left isn't blocked
-		if(blockedDirection != 3)
+		//If left isn't blocked and not paused
+		if(blockedDirection != 3 && !paused)
 		{
 			//If safe to move
 			if(checkOutOfBounds(0, -1))
@@ -313,8 +319,8 @@ public class SnakeModel extends Model {
 	public boolean moveRight()
 	{
 		
-		//If right isn't blocked
-		if(blockedDirection != 4)
+		//If right isn't blocked and not paused
+		if(blockedDirection != 4 && !paused)
 		{
 			//If safe to move
 			if(checkOutOfBounds(0, 1))
@@ -348,6 +354,21 @@ public class SnakeModel extends Model {
 	{
 		goalList.addLast(new Piece(-1, -1));
 		generateGoalCoordinates(goalList.getLast());
+	}
+	
+	/**
+	 * Toggles the paused field
+	 */
+	public void togglePaused()
+	{
+		if(paused == true)
+		{
+			paused = false;
+		}
+		else
+		{
+			paused = true;
+		}
 	}
 	
 	/**

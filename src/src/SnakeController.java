@@ -130,6 +130,11 @@ public class SnakeController extends Controller{
 				lastMove = KeyEvent.VK_D;
 			}
 		}
+		
+		if(input == KeyEvent.VK_ESCAPE)
+		{
+			model.togglePaused();
+		}
 	}
 
 	@Override

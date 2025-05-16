@@ -22,7 +22,7 @@ public class SnakeView extends View {
 	//The scalar for the size of the window
 	private static final double WINDOW_SCALAR = 1.1;
 	//The value for how many grid spaces there will be in the grid
-	protected static final int GRID_DIMENSION = 16;
+	protected static final int GRID_DIMENSION = 30;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;

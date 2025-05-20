@@ -10,7 +10,10 @@ public class TestAndExecute{
 
 	public static void main(String[] args) {
 		TestAndExecute test = new TestAndExecute();
-		test.execute();
+		
+		test.testGetStats();
+		test.testIncrementStats();
+		
 //		test.testCheckFormat();
 //		test.testGetGoalsGetGames();
 	}
@@ -21,6 +24,7 @@ public class TestAndExecute{
 	public TestAndExecute()
 	{
 		model = new Model();
+		stats = new Stats();
 	}
 	
 	/**
@@ -67,6 +71,18 @@ public class TestAndExecute{
 	private void testGetGoalsGetGames()
 	{
 		System.out.println("Games: " + stats.getGamesPlayed() + " Goals: " + stats.getGoalsEaten());
+	}
+	
+	private void testIncrementStats()
+	{
+		stats.incrementGamesPlayed();
+		stats.incrementGoalsEaten();
+	}
+	
+	private void testGetStats()
+	{
+		System.out.println("Games: " + stats.getGamesPlayed());
+		System.out.println("Goals: " + stats.getGoalsEaten());
 	}
 
 }

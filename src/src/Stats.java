@@ -2,10 +2,12 @@ package src;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Stats {
-	//The file format is: (goals eaten, games played)
+	//The file format is: (goals eaten games played)
 	private File statsFile;
 	private Scanner fileScnr;
 	
@@ -36,8 +38,10 @@ public class Stats {
 			}
 			return games;
 		}
+		//If format is incorrect, correct the format and call the method again
 		else {
-			return null;
+			correctFormat();
+			return getGamesPlayed();
 		}
 	}
 	
@@ -63,20 +67,59 @@ public class Stats {
 			}
 			return games;
 		}
+		//If format is incorrect, correct the format and call the method again
 		else {
-			return null;
+			correctFormat();
+			return getGoalsEaten();
 		}
 	}
 	
-	public void writeGamesPlayed(String games)
+	public void incrementGoalsEaten()
 	{
-		checkFormat();
+		if(checkFormat())
+		{
+			int goalsEaten = Integer.parseInt(getGoalsEaten()) + 1;
+			int gamesPlayed = Integer.parseInt(getGamesPlayed());
+			
+			System.out.println("IncrGoals goals: " + goalsEaten);
+			System.out.println("IncrGoals games: " + gamesPlayed);
+			
+			try (FileWriter writer = new FileWriter(statsFile)){
+				writer.write(goalsEaten + " " + gamesPlayed);
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		//If format is incorrect, correct the format and call the method again
+		else {
+			correctFormat();
+			incrementGoalsEaten();
+		}
 	}
 	
-	public void writeGoalsEaten(String goals)
+	public void incrementGamesPlayed()
 	{
-		checkFormat();
-		
+		if(checkFormat())
+		{
+			int goalsEaten = Integer.parseInt(getGoalsEaten());
+			int gamesPlayed = Integer.parseInt(getGamesPlayed()) + 1;
+			
+			System.out.println("IncrGames goals: " + goalsEaten);
+			System.out.println("IncrGames games: " + gamesPlayed);
+			
+			try (FileWriter writer = new FileWriter(statsFile)){
+				writer.write(goalsEaten + " " + gamesPlayed);
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		//If format is incorrect, correct the format and call the method again
+		else {
+			correctFormat();
+			incrementGamesPlayed();
+		}
 	}
 	
 	/**
@@ -93,6 +136,7 @@ public class Stats {
 			e.printStackTrace();
 			return false;
 		}
+		int integer;
 		//Check if there are at least two entries. Having more than 2 is irrelevant
 		for(int i = 0; i < 2; i++)
 		{
@@ -101,11 +145,34 @@ public class Stats {
 			{
 				return false;
 			}
-			fileScnr.next();
+			
+			//Check if the value scanned is an integer. if not, return false.
+			try {
+				integer = Integer.parseInt(fileScnr.next());
+			}
+			catch(NumberFormatException e)
+			{
+				return false;
+			}
 		}
 		//Close scanner and return true
 		fileScnr.close();
 		return true;
+	}
+	
+	//Called if format is not correct. Corrects the format.
+	private void correctFormat()
+	{
+		//TODO: remove
+		System.out.println("File contents corrected");
+		try (FileWriter writer = new FileWriter(statsFile)){
+			writer.write(0 + " " + 0);
+//			//TODO: remove
+//			System.out.println("File contents corrected to: " + getGoalsEaten() + getGamesPlayed());
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

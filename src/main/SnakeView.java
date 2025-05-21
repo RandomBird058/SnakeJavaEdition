@@ -1,4 +1,4 @@
-package src;
+package main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,7 +22,7 @@ public class SnakeView extends View {
 	//The scalar for the size of the window
 	private static final double WINDOW_SCALAR = 1.1;
 	//The value for how many grid spaces there will be in the grid
-	protected static final int GRID_DIMENSION = 3;
+	protected static final int GRID_DIMENSION = 16;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;

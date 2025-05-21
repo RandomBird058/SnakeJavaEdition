@@ -1,6 +1,6 @@
 package Test;
 
-import src.*;
+import main.*;
 
 //This class contains main and holds tests.
 public class TestAndExecute{
@@ -11,11 +11,8 @@ public class TestAndExecute{
 	public static void main(String[] args) {
 		TestAndExecute test = new TestAndExecute();
 		
-		test.testGetStats();
-		test.testIncrementStats();
-		
-//		test.testCheckFormat();
-//		test.testGetGoalsGetGames();
+		test.testWriteStats();
+		test.execute();
 	}
 	
 	/**
@@ -62,27 +59,31 @@ public class TestAndExecute{
 		snakeView.getModel().displayGameOver();
 	}
 	
-	private void testCheckFormat()
+//	private void testCheckFormat()
+//	{
+//		stats = new Stats();
+//		System.out.println(stats.checkFormat());
+//	}
+	
+	private void testReadStats()
 	{
-		stats = new Stats();
-		System.out.println(stats.checkFormat());
+		int[] data = stats.readData();
+		for(int i = 0; i < 2; i++)
+		{
+			System.out.println(data[i]);
+		}
 	}
 	
-	private void testGetGoalsGetGames()
+	private void testWriteStats()
 	{
-		System.out.println("Games: " + stats.getGamesPlayed() + " Goals: " + stats.getGoalsEaten());
+		int[] data = {0, 0};
+		stats.writeData(data);
 	}
 	
-	private void testIncrementStats()
-	{
-		stats.incrementGamesPlayed();
-		stats.incrementGoalsEaten();
-	}
-	
-	private void testGetStats()
-	{
-		System.out.println("Games: " + stats.getGamesPlayed());
-		System.out.println("Goals: " + stats.getGoalsEaten());
-	}
+//	private void testGetStats()
+//	{
+//		System.out.println("Games: " + stats.getGamesPlayed());
+//		System.out.println("Goals: " + stats.getGoalsEaten());
+//	}
 
 }

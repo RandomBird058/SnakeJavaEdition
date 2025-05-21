@@ -1,4 +1,4 @@
-package src;
+package main;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -6,7 +6,9 @@ import java.util.Random;
 public class SnakeModel extends Model {
 	
 	//Declare the view to display the window
-	SnakeView view;
+	private SnakeView view;
+	//Has-a stats class
+	private Stats stats;
 	
 	//Declare list to store snake piece in order
 	private LinkedList<Piece> snakeList;
@@ -34,6 +36,7 @@ public class SnakeModel extends Model {
 	{
 		super();
 		this.view = view;
+		stats = new Stats();
 		
 		//Instantiate blocked direction as down to start
 		blockedDirection = 2;
@@ -122,11 +125,17 @@ public class SnakeModel extends Model {
 			int goalRow = goalList.get(i).getRow();
 			int goalCol = goalList.get(i).getCol();
 			
-			//If the snake has reached the goal, generate new coordinates for the goal. Increment goals eaten
+			//If the snake has reached the goal, generate new coordinates for the goal. Increment goals eaten, update stats file
 			if(snakeRow == goalRow && snakeCol == goalCol)
 			{
-				System.out.println("Goal reached");
+				//Increment goals eaten
 				goalsEaten++;
+				//Increment goals eaten from file
+				int[] updatedData = stats.readData();
+				updatedData[0] ++;
+				//Update file with new goals
+				stats.writeData(updatedData);
+				//Generate new goal coords
 				generateGoalCoordinates(goalList.get(i));
 				//Add a snake piece to the end of the list
 				addSnakePiece(snakeList.getLast().getRow(), snakeList.getLast().getCol());

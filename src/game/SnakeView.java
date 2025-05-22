@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,11 +17,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+//SnakeView is-a View
 public class SnakeView extends View {
 	
 	//The scalar for the size of the window
 	private static final double WINDOW_SCALAR = 1.1;
-	//The value for how many grid spaces there will be in the grid
+	
+	//The integer for how many grid spaces there will be in the grid
 	protected static final int GRID_DIMENSION = 16;
 	
 	//Snake view has-a window dimension
@@ -36,28 +38,27 @@ public class SnakeView extends View {
 	//SnakeView has-a model
 	private SnakeModel model;
 	
-	//SnakeView knows the size of the screen
+	//SnakeView has-a dimension for the size of the screen
 	private Dimension screenSize;
 	
-	//Declare 2d array to hold JPanels by coordinate
+	//SnakeView has-a 2d array to hold JPanels by coordinate
 	private JPanel[][] gridArray;
 	
-	//SnakeView has-a grid panel
-	private JPanel gridPanel;
-	//SnakeView has-a return panel
-	private JPanel returnPanel;
-	//SnakeView has-a game over panel
-	private JPanel gameOverPanel;
+	//SnakeView has-many JPanels
+	private JPanel gridPanel, returnPanel, gameOverPanel;
+	
 	//SnakeView has-a game over label
 	private JLabel gameOverLabel;
+	
 	//SnakeView has-a return button
 	private JButton returnButton;
 	
 	/**
-	 * 
+	 * Call view constructor, instantiate objects and build the window
 	 */
 	public SnakeView()
 	{
+		super();
 		//Get screen size using java toolkit
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -79,6 +80,7 @@ public class SnakeView extends View {
 		//Private method creates the grid
 		createGrid();
 		
+		//Instantiate the model and controller
 		model = new SnakeModel(this);
 		controller = new SnakeController(model);
 		
@@ -90,6 +92,7 @@ public class SnakeView extends View {
 		//Add key listener to the view window
 		addKeyListener(controller);
 		
+		//Make window visible
 		setVisible(true);
 		
 	}
@@ -99,7 +102,7 @@ public class SnakeView extends View {
 	 */
 	private void createGrid()
 	{
-		//
+		//Instantiate the panel and the grid layout
 		gridPanel = new JPanel();
 		gridPanel.setLayout(new GridLayout(GRID_DIMENSION, GRID_DIMENSION));
 		
@@ -121,6 +124,7 @@ public class SnakeView extends View {
 				gridPanel.add(gridArray[r][c]);
 			}
 		}
+		
 		//Color
 		gridPanel.setBackground(GRID_COLOR_2);
 		
@@ -165,7 +169,7 @@ public class SnakeView extends View {
 	/**
 	 * Sets the JPanel at the specified coordinate value to the snake color
 	 * @param row row of the piece
-	 * @param col column of the piece
+	 * @param col Column of the piece
 	 */
 	public void setPieceColor(int row, int col, Color color)
 	{
@@ -174,10 +178,12 @@ public class SnakeView extends View {
 	
 	/**
 	 * Removes the grid and builds the game over screen
+	 * TODO: Make this another window?
 	 */
 	public void gameOver()
 	{
 		System.out.println("GameOver (View)");
+		
 		//Declare components and add action listener to button
 		gameOverPanel = new JPanel();
 		returnPanel = new JPanel();
@@ -225,6 +231,12 @@ public class SnakeView extends View {
 		revalidate();
 	}
 	
+	/**
+	 * Returns the JPanel in the array with the specified coordinates
+	 * @param row The row of the piece
+	 * @param col The col of the piece
+	 * @return The piece at the coordinates
+	 */
 	public JPanel getPanelAtCoordinates(int row, int col)
 	{
 		return gridArray[row][col];
@@ -232,14 +244,10 @@ public class SnakeView extends View {
 	
 	/**
 	 * Test method to give testandexecute access to the model
+	 * TODO: Can be removed soon
 	 */
 	public SnakeModel getModel()
 	{
 		return model;
-	}
-
-	public JPanel getPieceAt(int row, int col) {
-		
-		return gridArray[row][col];
 	}
 }

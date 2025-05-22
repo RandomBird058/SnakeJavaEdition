@@ -1,4 +1,4 @@
-package main;
+package game;
 
 public class Model {
 	
@@ -8,7 +8,7 @@ public class Model {
 	public Model() {}
 	
 	/**
-	 * Creates a menu window by creating the view which then creates and controller/model
+	 * Creates a menu window by creating the view which then creates the controller/model
 	 */
 	public void createMenuWindow()
 	{
@@ -16,7 +16,7 @@ public class Model {
 	}
 	
 	/**
-	 * Creates a snake window by creating the view which then creates and controller/model
+	 * Creates a snake window by creating the view which then creates the controller/model
 	 */
 	public void createSnakeWindow()
 	{

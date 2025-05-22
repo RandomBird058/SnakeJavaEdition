@@ -1,36 +1,36 @@
-package main;
+package game;
 
 import java.util.LinkedList;
 import java.util.Random;
 
+//SnakeModel is-a Model
 public class SnakeModel extends Model {
 	
-	//Declare the view to display the window
+	//SnakeModel has-a SnakeView
 	private SnakeView view;
-	//Has-a stats class
+	
+	//SnakeModel Has-a Stats class
 	private Stats stats;
 	
-	//Declare list to store snake piece in order
-	private LinkedList<Piece> snakeList;
-	//Declare list to store goal pieces
-	private LinkedList<Piece> goalList;
+	//Declare a LinkedList to store snake pieces and a LinkedList to store goals
+	private LinkedList<Piece> snakeList, goalList;
 	
-	//Declare integer to hold blocked direction (1 Up, 2 Down, 3 Left, 4 Right)
+	//Declare an integer to hold blocked direction (1 Up, 2 Down, 3 Left, 4 Right)
 	//Snake cannot move in this direction
 	private int blockedDirection;
 	
-	//
-	private boolean paused;
-	
-//	//Booleans for if moving in a certain direction is safe. Checked every move
-//	private boolean upSafe, downSafe, leftSafe, rightsafe;
-	
-	//Declare int to hold goals eaten this game TODO: Display on game over screen (low priority)
+	//Declare an integer to hold goals eaten this game
+	//TODO: Display on game over screen (low priority)
 	private int goalsEaten;
 	
+	//Declare a boolean to tell if the game is paused
+	private boolean paused;
+	
 	/**
-	 * 
-	 * @param view the view that the model will give commands to
+	 * Call the Model constructor and instantiate objects 
+	 * Create the first goal piece
+//	 * TODO: Why not create snake pieces here too?
+	 * @param view The view that the model will give commands to
 	 */
 	public SnakeModel(SnakeView view)
 	{
@@ -60,8 +60,8 @@ public class SnakeModel extends Model {
 	
 	/**
 	 * Creates a piece, adds it to the end of the snake and calls method to make it visible
-	 * @param row
-	 * @param col
+	 * @param row The row assigned to the piece
+	 * @param col The col assigned to the piece
 	 */
 	public void addSnakePiece(int row, int col)
 	{
@@ -73,7 +73,7 @@ public class SnakeModel extends Model {
 	}
 	
 	/**
-	 * Generates the position of the goal, making sure there are no pieces in the way
+	 * Generates the position of the goal, making sure there are no pieces at that position
 	 * Adds the goal to the list and makes it visible
 	 */
 	public void generateGoalCoordinates(Piece goal)
@@ -84,18 +84,19 @@ public class SnakeModel extends Model {
 		//Generate random coordinate
 		Random randCoord = new Random();
 		
-		//Store coordinates
+		//Integers to store coordinates
 		int row = -1;
 		int col = -1;
 		
 		//While space is not confirmed clear
 		while(!clear)
 		{
+			//Randomly generate coordinates 
 			row = randCoord.nextInt(SnakeView.GRID_DIMENSION);
 			col = randCoord.nextInt(SnakeView.GRID_DIMENSION);
 			
 			//Get JPanel at coordinates. If it is not the same color as the snake, must be clear.
-			//More efficient than going through entire snakeList comparing coordinates
+			//Seems strange but is more efficient than going through entire snakeList comparing coordinates
 			if(view.getPanelAtCoordinates(row, col).getBackground() != View.SNAKE_COLOR)
 			{
 				clear = true;
@@ -111,7 +112,8 @@ public class SnakeModel extends Model {
 	}
 	
 	/**
-	 * Checks if the snake has reached the goal. If yes, generate new goal coordinates and TODO: create a new tail piece
+	 * Checks if the snake has reached the goal
+	 * If yes, generate new goal coordinates and add a tail piece to the end of the snake
 	 */
 	private void checkGoalCollision()
 	{
@@ -122,23 +124,30 @@ public class SnakeModel extends Model {
 		//For every active goal
 		for(int i = 0; i < goalList.size(); i++)
 		{
+			//Coordinates of the goal being compared
 			int goalRow = goalList.get(i).getRow();
 			int goalCol = goalList.get(i).getCol();
 			
-			//If the snake has reached the goal, generate new coordinates for the goal. Increment goals eaten, update stats file
+			//If the snake occupies the same coordinates as the goal, generate new coordinates for the goal 
+			//Increment goals eaten, update stats file, check for level up
 			if(snakeRow == goalRow && snakeCol == goalCol)
 			{
 				//Increment goals eaten
 				goalsEaten++;
+				
 				//Increment goals eaten from file
 				int[] updatedData = stats.readData();
 				updatedData[0] ++;
+				
 				//Update file with new goals
 				stats.writeData(updatedData);
+				
 				//Generate new goal coords
 				generateGoalCoordinates(goalList.get(i));
+				
 				//Add a snake piece to the end of the list
 				addSnakePiece(snakeList.getLast().getRow(), snakeList.getLast().getCol());
+				
 				//Every 10 goals eaten, level up
 				if(goalsEaten % 10 == 0)
 				{
@@ -148,9 +157,13 @@ public class SnakeModel extends Model {
 		}
 	}
 	
+	/**
+	 * Checks if the head of the snake is going to occupy the same space as the body
+	 * If so, game over
+	 * TODO: Optimization is recommended if this is going to go large scale
+	 */
 	private void checkBodyCollision()
 	{
-		//TODO: Optimization is very needed
 		//Coordinates of the head
 		int headRow = snakeList.getFirst().getRow();
 		int headCol = snakeList.getFirst().getCol();
@@ -165,7 +178,6 @@ public class SnakeModel extends Model {
 			//If head coordinates are same as body piece coordinates, game over
 			if(headRow == pieceRow && headCol == pieceCol)
 			{
-				System.out.println("Body collision");
 				displayGameOver();
 			}
 		}
@@ -186,6 +198,7 @@ public class SnakeModel extends Model {
 		//If head's row + the direction is less then 0 or greater than the grid
 		if(headRow + row < 0 || headRow + row == SnakeView.GRID_DIMENSION)
 		{
+			//Display game over and return false
 			displayGameOver();
 			return false;
 		}
@@ -200,6 +213,7 @@ public class SnakeModel extends Model {
 			
 	/**
 	 * Move the piece at the back of the snake list to the front
+	 * Remove the moved piece from the back
 	 */
 	private void moveBackFront()
 	{
@@ -215,8 +229,8 @@ public class SnakeModel extends Model {
 	 * 				Change the coordinates of the front piece
 	 * 				Change the color of the new coordinate of the front piece to snake color
 	 * 
-	 * @param row row to change row of first in list to
-	 * @param col col to change col of first in list to
+	 * @param row Row to change row of first in list to
+	 * @param col Col to change col of first in list to
 	 */
 	private void moveFrontPiece(int row, int col)
 	{
@@ -233,7 +247,11 @@ public class SnakeModel extends Model {
 	}
 	
 	/**
-	 * 
+	 * Moves the snake up by calling the moveBackFront and moveFrontPiece methods
+	 * 		Checks if the user is trying to move in the blocked direction
+	 * 		Checks if the user is moving out of bounds
+	 * 		Checks if the game is paused
+	 * @return true if the move was successful and false if it wasn't
 	 */
 	public boolean moveUp()
 	{
@@ -265,6 +283,13 @@ public class SnakeModel extends Model {
 		return false;
 	}
 	
+	/**
+	 * Moves the snake down by calling the moveBackFront and moveFrontPiece methods
+	 * 		Checks if the user is trying to move in the blocked direction
+	 * 		Checks if the user is moving out of bounds
+	 * 		Checks if the game is paused
+	 * @return true if the move was successful and false if it wasn't
+	 */
 	public boolean moveDown()
 	{
 		//If down isn't blocked and not paused
@@ -295,6 +320,13 @@ public class SnakeModel extends Model {
 		return false;
 	}
 	
+	/**
+	 * Moves the snake left by calling the moveBackFront and moveFrontPiece methods
+	 * 		Checks if the user is trying to move in the blocked direction
+	 * 		Checks if the user is moving out of bounds
+	 * 		Checks if the game is paused
+	 * @return true if the move was successful and false if it wasn't
+	 */
 	public boolean moveLeft()
 	{
 		//If left isn't blocked and not paused
@@ -325,6 +357,13 @@ public class SnakeModel extends Model {
 		return false;
 	}
 	
+	/**
+	 * Moves the snake right by calling the moveBackFront and moveFrontPiece methods
+	 * 		Checks if the user is trying to move in the blocked direction
+	 * 		Checks if the user is moving out of bounds
+	 * 		Checks if the game is paused
+	 * @return true if the move was successful and false if it wasn't
+	 */
 	public boolean moveRight()
 	{
 		
@@ -357,7 +396,7 @@ public class SnakeModel extends Model {
 	}
 	
 	/**
-	 * Every
+	 * Adds another goal to the goalList and generates it on the grid
 	 */
 	public void levelUp()
 	{
@@ -386,8 +425,6 @@ public class SnakeModel extends Model {
 	public void displayGameOver()
 	{
 		view.gameOver();
-		
-		System.out.println("DisplayGameOver");
 	}
 	
 	/**

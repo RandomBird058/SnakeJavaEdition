@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,12 +14,12 @@ public class Stats {
 	private File file;
 
 	/**
-	 * Instantiate the file obj
+	 * Instantiate the file object
 	 */
 	public Stats()
 	{
 		//If no file exists, will create the file at that location.
-		file = new File("src/main/stats.dat");
+		file = new File("src/game/stats.dat");
 	}
 	
 	/**
@@ -46,7 +46,10 @@ public class Stats {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		//If this code runs, the try was unsuccessful
+		data[0] = -1;
+		data[1] = -1;
+		return data;
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,38 +15,35 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 //Font: Public Pixel - https://www.fontspace.com/public-pixel-font-f72305
+//MenuView is-a View
 public class MenuView extends View {
 	
 	//The scalar for how big the menu window will be
 	private static final int WINDOW_SCALAR = 2;
 	
 	//The height and width that the window will be
-	private final int windowHeight;
-	private final int windowWidth;
+	private final int windowHeight, windowWidth;
 	
-	//MenuView has-a model and controller (makes up the window)
+	//MenuView has-a model
 	private MenuModel model;
+	
+	//MenuView has-a controller
 	private MenuController controller;
 	
-	//MenuView has-a screen size
+	//MenuView has-a screen size dimension
 	private Dimension screenSize;
 	
 	//MenuView has-a font
 	private Font publicPixel;
 	
-	//MenuView has-many components
-	//Components of title
-	private JPanel titlePanel;
-	private JLabel titleLabel;
+	//MenuView has-many panels
+	private JPanel titlePanel, statsPanel, startPanel;
 	
-	//Components of start button
-	private JPanel startPanel;
+	//MenuView has-many labels
+	private JLabel titleLabel, timesPlayedLabel, goalsEatenLabel;
+	
+	//MenuView has-a button
 	private JButton startButton;
-	
-	//Components of stats section
-	private JPanel statsPanel;
-	private JLabel timesPlayedLabel;
-	private JLabel goalsEatenLabel;
 
 	/**
 	 * Call View constructor, Instantiate model/controller, build window
@@ -69,7 +66,7 @@ public class MenuView extends View {
 		setSize(windowWidth, windowHeight);
 		
 		//Instantiate the font in try-catch
-		//TODO: The font isn't changing :(
+		//TODO: The font isn't changing :( see View
 		try {
 			publicPixel = Font.createFont(Font.TRUETYPE_FONT, FONT_FILE);
 		} catch (FontFormatException | IOException e) {
@@ -82,17 +79,20 @@ public class MenuView extends View {
 		createStart();
 		createStats();
 		
+		//TODO: Doesn't work. see MenuController
 		//Window listens for keyboard input
 		addKeyListener(controller);
 		
+		//TODO: ^^^
 		//Take focus away from the button
 		requestFocus();
 		
+		//Window is visible
 		setVisible(true);
 	}
 	
 	/**
-	 * Instantiates the components for title and adds to the frame north
+	 * Instantiates the components for the title and adds to the frame north
 	 */
 	private void createTitle()
 	{
@@ -102,10 +102,11 @@ public class MenuView extends View {
 		//Instantiate label to hold the title and change its properties
 		titleLabel = new JLabel("Snake Java Edition");
 		
-		//Decorate the components
-		titlePanel.setBackground(BG_COLOR);
-		titleLabel.setForeground(FG_COLOR);
+		//Color the components
+		titlePanel.setBackground(View.BG_COLOR);
+		titleLabel.setForeground(View.FG_COLOR);
 		
+		//TODO: Font doesn't. See View
 		//Resize the font. Make a new font with the same attributes as Og font but size proportional to window width
 		titleLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/10)));
 
@@ -119,25 +120,26 @@ public class MenuView extends View {
 	 */
 	private void createStart()
 	{
-		//Instantiate panel to hold start button and change its properties
+		//Instantiate the panel to hold start button and change its properties
 		startPanel = new JPanel();
-		//Instantiate button to start the game and change its properties
+		
+		//Instantiate the button to start the game and change its properties
 		startButton = new JButton("START");
 		
 		//Add an action listener to the button
 		startButton.addActionListener(controller);
 		
-		//Decorate components
-		//Colors
+		//Color components
 		startPanel.setBackground(BG_COLOR);
 		startButton.setForeground(FG_COLOR);
 		startButton.setBackground(BG_COLOR);
 		
 		//Add a border to the button
 		startButton.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
-		//Get rid of ugly line when button focused
+		//Get rid of the ugly line when the button is focused
 		startButton.setFocusPainted(false);
 	
+		//TODO: Font doesn't work. See View
 		//Resize the font. Make a new font with the same attributes as Og font but size proportional to window width
 		startButton.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/20)));
 		
@@ -151,19 +153,19 @@ public class MenuView extends View {
 	 */
 	private void createStats()
 	{
-		//Instantiate panel to hold stats labels
+		//Instantiate the panel to hold the stats labels
 		statsPanel = new JPanel();
 		
-		//Instantiate labels to display the stats
+		//Instantiate the labels to display the stats
 		timesPlayedLabel = new JLabel(model.getGamesMessage());
 		goalsEatenLabel = new JLabel(model.getGoalsMessage());
 		
-		//Decorate components
-		//Colors
+		//Color components
 		timesPlayedLabel.setBackground(FG_COLOR);
 		goalsEatenLabel.setBackground(FG_COLOR);
 		statsPanel.setBackground(FG_COLOR);
 		
+		//TODO: Font doesn't work. See View
 		//Set font of labels
 		timesPlayedLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/30)));
 		goalsEatenLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/30)));

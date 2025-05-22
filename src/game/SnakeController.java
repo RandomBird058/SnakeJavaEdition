@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -6,12 +6,13 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.Timer;
 
+//SnakeController is-a Controller
 public class SnakeController extends Controller{
 	
 	//SnakeController has-a model
 	private SnakeModel model;
 	
-	//SnakeController has-a move timer
+	//SnakeController has-a Timer to track time between moves
 	private Timer moveTimer;
 	
 	//SnakeController has-a lastMove which stores the last direction moved
@@ -20,16 +21,27 @@ public class SnakeController extends Controller{
 	//Time between auto moves
 	private int timerDelay;
 	
-	
+	/**
+	 * Instantiate the model, lastMove, timerDelay, timer and start the timer
+	 * @param model The model to give commands to
+	 */
 	public SnakeController(SnakeModel model)
 	{
 		this.model = model;
+		
+		//Set to S key because the snake can't move down when the game starts
 		lastMove = KeyEvent.VK_S;
 		timerDelay = 250;
 		moveTimer = new Timer(timerDelay, this);
+		
+		//Starts the timer
 		moveTimer.start();
 	}
 	
+	/**
+	 * Stops the move timer
+	 * Model doesn't have direct access to the timer so a method is needed
+	 */
 	public void stopMoveTimer()
 	{
 		moveTimer.stop();
@@ -77,6 +89,7 @@ public class SnakeController extends Controller{
 	@Override
 	public void keyPressed(KeyEvent e) 
 	{
+		//Stores the input as keycode
 		int input = e.getKeyCode();
 		
 		//Up
@@ -131,6 +144,7 @@ public class SnakeController extends Controller{
 			}
 		}
 		
+		//If escape, toggle the paused state
 		if(input == KeyEvent.VK_ESCAPE)
 		{
 			model.togglePaused();

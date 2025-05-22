@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,8 +6,10 @@ import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 //Font: Public Pixel - https://www.fontspace.com/public-pixel-font-f72305
+//View is-a JFrame
 public class View extends JFrame {
 	
 	//The file holding the text font
@@ -29,12 +31,11 @@ public class View extends JFrame {
 
 	public View()
 	{	
-		new JFrame();
-		
 		//TODO: (low priority) this could work but you need to add a way to drag the frame using the mouse
 		//setUndecorated(true);
 		
 		setResizable(false);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
 	/**

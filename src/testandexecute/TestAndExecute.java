@@ -1,6 +1,6 @@
-package Test;
+package testandexecute;
 
-import main.*;
+import game.*;
 
 //This class contains main and holds tests.
 public class TestAndExecute{
@@ -10,8 +10,6 @@ public class TestAndExecute{
 
 	public static void main(String[] args) {
 		TestAndExecute test = new TestAndExecute();
-		
-		test.testWriteStats();
 		test.execute();
 	}
 	
@@ -59,12 +57,9 @@ public class TestAndExecute{
 		snakeView.getModel().displayGameOver();
 	}
 	
-//	private void testCheckFormat()
-//	{
-//		stats = new Stats();
-//		System.out.println(stats.checkFormat());
-//	}
-	
+	/**
+	 * Test reading data from the file
+	 */
 	private void testReadStats()
 	{
 		int[] data = stats.readData();
@@ -74,16 +69,12 @@ public class TestAndExecute{
 		}
 	}
 	
+	/**
+	 * Test writing data to the file
+	 */
 	private void testWriteStats()
 	{
 		int[] data = {0, 0};
 		stats.writeData(data);
 	}
-	
-//	private void testGetStats()
-//	{
-//		System.out.println("Games: " + stats.getGamesPlayed());
-//		System.out.println("Goals: " + stats.getGoalsEaten());
-//	}
-
 }

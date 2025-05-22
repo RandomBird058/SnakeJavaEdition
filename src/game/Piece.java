@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import javax.swing.JPanel;
 
@@ -6,13 +6,12 @@ import javax.swing.JPanel;
 public class Piece extends JPanel{
 	
 	//Piece has-a row and column
-	private int row;
-	private int col;
+	private int row, col;
 	
 	/**
 	 * Initialize the row and column of the piece
-	 * @param row
-	 * @param col
+	 * @param row of the piece
+	 * @param col of the piece
 	 */
 	public Piece(int row, int col)
 	{
@@ -31,7 +30,7 @@ public class Piece extends JPanel{
 
 	/**
 	 * Get the column of the piece
-	 * @return The Column of the piece
+	 * @return The column of the piece
 	 */
 	public int getCol()
 	{

@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;

@@ -7,12 +7,9 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,7 +21,7 @@ public class SnakeView extends View {
 	private static final double WINDOW_SCALAR = 1.1;
 	
 	//The integer for how many grid spaces there will be in the grid
-	protected static final int GRID_DIMENSION = 16;
+	protected static final int GRID_DIMENSION = 50;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;

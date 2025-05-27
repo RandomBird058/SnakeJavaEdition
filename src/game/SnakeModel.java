@@ -1,5 +1,18 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Hanlde the functions of the snake
+* 								Create a stats class to rewrite the stats file
+* 								Handle the collision
+* 								Handle the goals
+* 								Tell the view what color each piece on the grid should be
+*/
+
 import java.util.LinkedList;
 import java.util.Random;
 

@@ -1,5 +1,15 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Write to the stats file based on models
+* 								Read the stats file to the models
+*/
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;

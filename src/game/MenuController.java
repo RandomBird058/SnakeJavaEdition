@@ -1,5 +1,14 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: Instruct the model when user input is detected.
+*/
+
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 

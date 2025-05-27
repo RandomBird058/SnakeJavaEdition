@@ -1,5 +1,16 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Display a grid on the snake game window
+* 								Create a game over screen when told by the model
+* 								Change the colors of each piece on the grid based on the model
+*/
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +32,7 @@ public class SnakeView extends View {
 	private static final double WINDOW_SCALAR = 1.1;
 	
 	//The integer for how many grid spaces there will be in the grid
-	protected static final int GRID_DIMENSION = 50;
+	protected static final int GRID_DIMENSION = 16;
 	
 	//Snake view has-a window dimension
 	private final int windowDimension;

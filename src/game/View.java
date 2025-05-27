@@ -1,5 +1,15 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Be able to close itself
+* 								Hold constants used by all views
+*/
+
 import java.awt.Color;
 import java.io.File;
 

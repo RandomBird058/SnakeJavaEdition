@@ -1,5 +1,15 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Parent class of models. 
+* 								Create menu windows and snake game windows
+*/
+
 public class Model {
 	
 	/**

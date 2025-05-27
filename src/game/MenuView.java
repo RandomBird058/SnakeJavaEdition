@@ -1,5 +1,13 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Build and display the menu in a window
+*/
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

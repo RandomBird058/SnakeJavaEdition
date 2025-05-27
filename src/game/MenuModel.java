@@ -1,5 +1,15 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Use methods from the stats class to display and rewrite the goals eaten/games played
+* 								Handle opening/closing windows 
+* 								Handle commands from the controller and view
+*/
 //MenuModel is-a Model
 public class MenuModel extends Model{
 	

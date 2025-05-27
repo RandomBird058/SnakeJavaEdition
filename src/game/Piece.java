@@ -1,5 +1,15 @@
 package game;
 
+/**
+* @author Dominic Ricci
+* @otherContributors: CISC 191 Class, Prof. Alex Chow
+* @version 1.0
+* @see
+*      
+* Responsibilities of class: 	Know its coordinates
+* 								Tell models its coordinates
+*/
+
 import javax.swing.JPanel;
 
 //Piece is-a JPanel

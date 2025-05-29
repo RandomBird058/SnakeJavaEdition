@@ -60,7 +60,7 @@ public class MenuModel extends Model{
 		//If goals is not 0:
 		if(data[0] != 0)
 		{
-			return "Goals eaten: " + data[0];
+			return "Goals eaten " + data[0];
 		}
 		//If goals is 0:
 		return "Eat Goals to get score!";
@@ -77,7 +77,7 @@ public class MenuModel extends Model{
 		//If games is not 0:
 		if(data[1] != 0)
 		{
-			return "Games played: " + data[1];
+			return "Games played " + data[1];
 		}
 		//If games is 0:
 		return "Press Start to play!";

@@ -4,7 +4,7 @@ package game;
 * @author Dominic Ricci
 * @otherContributors: CISC 191 Class, Prof. Alex Chow
 * @version 1.0
-* @see
+* @see Font: Agogo - https://www.fontspace.com/a-gogo-font-f28855
 *      
 * Responsibilities of class: 	Display a grid on the snake game window
 * 								Create a game over screen when told by the model
@@ -38,7 +38,7 @@ public class SnakeView extends View {
 	private final int windowDimension;
 	
 	//SnakeView has-a font
-	private Font publicPixel;
+	private Font agogo;
 	
 	//SnakeView has-a controller
 	private SnakeController controller;
@@ -77,9 +77,9 @@ public class SnakeView extends View {
 		setSize(windowDimension, windowDimension);
 		
 		//Instantiate the font in try-catch
-		//TODO: The font isn't changing :(
 		try {
-			publicPixel = Font.createFont(Font.TRUETYPE_FONT, FONT_FILE);
+			agogo = Font.createFont(Font.TRUETYPE_FONT, FONT_FILE);
+			System.out.println("Font made succesfully");
 		} catch (FontFormatException | IOException e) {
 			System.out.println("Font not found");
 			e.printStackTrace();
@@ -212,14 +212,15 @@ public class SnakeView extends View {
 		returnButton.setBackground(BG_COLOR);
 		returnButton.setForeground(FG_COLOR);
 
-		//Add a border to the button
-		returnButton.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+		//Add a border to the button (invisible for now because the font isnt centered)
+		returnButton.setBorder(BorderFactory.createLineBorder(View.BG_COLOR, 2));
+		
 		//Get rid of ugly line when button focused
 		returnButton.setFocusPainted(false);
 		
 		//Size Components with font
-		gameOverLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowDimension / 6)));
-		returnButton.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowDimension / 6)));
+		gameOverLabel.setFont(agogo.deriveFont(Font.PLAIN, (int)(windowDimension/6)));
+		returnButton.setFont(agogo.deriveFont(Font.PLAIN, (int)(windowDimension/6)));
 		
 		//Window no longer takes in inputs from controller
 		removeKeyListener(controller);

@@ -4,7 +4,7 @@ package game;
 * @author Dominic Ricci
 * @otherContributors: CISC 191 Class, Prof. Alex Chow
 * @version 1.0
-* @see
+* @see Font: Agogo - https://www.fontspace.com/a-gogo-font-f28855
 *      
 * Responsibilities of class: 	Build and display the menu in a window
 */
@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Toolkit;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -21,7 +22,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-//Font: Public Pixel - https://www.fontspace.com/public-pixel-font-f72305
 //MenuView is-a View
 public class MenuView extends View {
 	
@@ -41,7 +41,7 @@ public class MenuView extends View {
 	private Dimension screenSize;
 	
 	//MenuView has-a font
-	private Font publicPixel;
+	private Font agogo;
 	
 	//MenuView has-many panels
 	private JPanel titlePanel, statsPanel, startPanel;
@@ -73,9 +73,8 @@ public class MenuView extends View {
 		setSize(windowWidth, windowHeight);
 		
 		//Instantiate the font in try-catch
-		//TODO: The font isn't changing :( see View
 		try {
-			publicPixel = Font.createFont(Font.TRUETYPE_FONT, FONT_FILE);
+			agogo = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(FONT_FILE));
 		} catch (FontFormatException | IOException e) {
 			System.out.println("Font not found");
 			e.printStackTrace();
@@ -113,9 +112,8 @@ public class MenuView extends View {
 		titlePanel.setBackground(View.BG_COLOR);
 		titleLabel.setForeground(View.FG_COLOR);
 		
-		//TODO: Font doesn't. See View
 		//Resize the font. Make a new font with the same attributes as Og font but size proportional to window width
-		titleLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/10)));
+		titleLabel.setFont(agogo.deriveFont(Font.PLAIN, (int)(windowWidth/11)));
 
 		//Add label to the panel and panel to the frame
 		titlePanel.add(titleLabel);
@@ -141,14 +139,14 @@ public class MenuView extends View {
 		startButton.setForeground(FG_COLOR);
 		startButton.setBackground(BG_COLOR);
 		
-		//Add a border to the button
-		startButton.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+		//Add a border to the button (invisible for now because the font isnt centered)
+		startButton.setBorder(BorderFactory.createLineBorder(View.BG_COLOR, 2));
+		
 		//Get rid of the ugly line when the button is focused
 		startButton.setFocusPainted(false);
 	
-		//TODO: Font doesn't work. See View
 		//Resize the font. Make a new font with the same attributes as Og font but size proportional to window width
-		startButton.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/20)));
+		startButton.setFont(agogo.deriveFont(Font.PLAIN, (int)(windowWidth/10)));
 		
 		//Add button to the panel and panel to the frame
 		startPanel.add(startButton);
@@ -174,8 +172,8 @@ public class MenuView extends View {
 		
 		//TODO: Font doesn't work. See View
 		//Set font of labels
-		timesPlayedLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/30)));
-		goalsEatenLabel.setFont(new Font(publicPixel.getName(), publicPixel.getStyle(), (int)(windowWidth/30)));
+		timesPlayedLabel.setFont(agogo.deriveFont(Font.PLAIN, (int)(windowWidth/30)));
+		goalsEatenLabel.setFont(agogo.deriveFont(Font.PLAIN, (int)(windowWidth/30)));
 		
 		//Add labels to the panel and panel to the frame
 		statsPanel.add(timesPlayedLabel);

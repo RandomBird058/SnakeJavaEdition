@@ -4,7 +4,7 @@ package game;
 * @author Dominic Ricci
 * @otherContributors: CISC 191 Class, Prof. Alex Chow
 * @version 1.0
-* @see
+* @see Font: Agogo - https://www.fontspace.com/a-gogo-font-f28855
 *      
 * Responsibilities of class: 	Be able to close itself
 * 								Hold constants used by all views
@@ -16,12 +16,11 @@ import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-//Font: Public Pixel - https://www.fontspace.com/public-pixel-font-f72305
 //View is-a JFrame
 public class View extends JFrame {
 	
 	//The file holding the text font
-	protected static final File FONT_FILE = new File("src/assets/PublicPixel-rv0pA.ttf");
+	protected static final File FONT_FILE = new File("src/assets/Agogo-7e0K.otf");
 	
 	//Grid Colors will alternate
 	//Grid color

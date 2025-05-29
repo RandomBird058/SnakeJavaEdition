@@ -21,7 +21,7 @@ import javax.swing.WindowConstants;
 public class View extends JFrame {
 	
 	//The file holding the text font
-	protected static final File FONT_FILE = new File("PublicPixel-rv0pA.ttf");
+	protected static final File FONT_FILE = new File("src/assets/PublicPixel-rv0pA.ttf");
 	
 	//Grid Colors will alternate
 	//Grid color

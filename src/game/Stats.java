@@ -29,7 +29,7 @@ public class Stats {
 	public Stats()
 	{
 		//If no file exists, will create the file at that location.
-		file = new File("src/game/stats.dat");
+		file = new File("stats.dat");
 	}
 	
 	/**
